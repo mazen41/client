@@ -12,6 +12,7 @@ import AboutSection from '../components/AboutSection.jsx/AboutSection';
 import ServicesSection from '../components/ServicesSection/ServicesSection';
 import WhyChooseUs from '../components/WhyChooseUs/WhyChooseUs';
 import Footer from '../components/Footer/Footer';
+import OffersSection from '../components/Offers/OffersSection';
 const HomePage = () => {
   return (
     <motion.div
@@ -33,6 +34,9 @@ const HomePage = () => {
         </Box>
         <Box sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
           <ServicesSection />
+        </Box>
+        <Box sx={{ py: { xs: 8, md: 12 }}}>
+          <OffersSection />
         </Box>
         <Box sx={{ py: { xs: 8, md: 12 } }}>
           <WhyChooseUs />
