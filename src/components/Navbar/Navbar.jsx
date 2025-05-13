@@ -1,36 +1,96 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  AppBar, 
+  Toolbar, 
+  Container, 
+  Button, 
+  IconButton, 
+  Box, 
+  Menu, 
+  MenuItem, 
+  Fade,
+  Slide,
+  useScrollTrigger,
+  styled
+} from '@mui/material';
+import { 
+  Language, 
+  Login, 
+  PersonAdd, 
+  Menu as MenuIcon,
+  Close
+} from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Box, IconButton, useMediaQuery } from '@mui/material';
-import LanguageIcon from '@mui/icons-material/Language';
+import { motion } from 'framer-motion';
+
+const StyledAppBar = styled(AppBar)(({ theme, scrolled }) => ({
+  backgroundColor: scrolled ? theme.palette.background.paper : 'transparent',
+  boxShadow: scrolled ? theme.shadows[4] : 'none',
+  transition: 'all 0.5s ease',
+  backdropFilter: scrolled ? 'blur(10px)' : 'none',
+  borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
+  padding: scrolled ? theme.spacing(1, 0) : theme.spacing(2, 0),
+}));
+
+const NavButton = styled(Button)(({ theme, active }) => ({
+  color: active ? theme.palette.primary.main : theme.palette.text.primary,
+  fontWeight: active ? 600 : 400,
+  position: 'relative',
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    bottom: 4,
+    left: 0,
+    width: active ? '100%' : 0,
+    height: 2,
+    backgroundColor: theme.palette.primary.main,
+    transition: 'width 0.3s ease',
+  },
+  '&:hover:after': {
+    width: '100%',
+  },
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+}));
+
+const LanguageButton = styled(IconButton)(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  marginLeft: theme.spacing(1),
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+    transform: 'rotate(15deg)',
+  },
+}));
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const isArabic = i18n.language === 'ar';
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
-  const [hasShadow, setHasShadow] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const scrolled = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 50,
+  });
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     document.body.dir = lng === 'ar' ? 'rtl' : 'ltr';
+    setAnchorEl(null);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get the about section element
-      const aboutSection = document.getElementById('about-section');
-      if (aboutSection) {
-        // Calculate when to add shadow (100px before reaching about section)
-        const triggerPoint = aboutSection.offsetTop - 100;
-        setHasShadow(window.scrollY > triggerPoint);
-      }
-    };
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const navItems = [
     { key: 'home', path: '/' },
@@ -40,250 +100,228 @@ const Navbar = () => {
   ];
 
   return (
-    <AppBar 
-      position="sticky"
-      elevation={hasShadow ? 4 : 0}
-      sx={{ 
-        backgroundColor: 'background.paper',
-        color: 'text.primary',
-        borderBottom: hasShadow ? 'none' : '1px solid',
-        borderColor: 'divider',
-        py: 1,
-        transition: 'all 0.3s ease',
-        boxShadow: hasShadow ? '0px 2px 10px rgba(0, 0, 0, 0.1)' : 'none'
-      }}
-    >
-      <Toolbar sx={{ 
-        maxWidth: '1280px',
-        width: '100%',
-        mx: 'auto',
-        px: { xs: 2, md: 4 },
-      }}>
-        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              width: '120px',
-              height: '40px',
-              display: 'flex',
+    <StyledAppBar position="fixed" scrolled={scrolled ? 1 : 0}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {/* Logo with animation */}
+          <Box 
+            component={motion.div}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            sx={{ flexGrow: 1 }}
+          >
+            <RouterLink to="/">
+              <img 
+                src="./new-logo.png" 
+                alt="NadaPay Logo"
+                style={{
+                  width: '120px',
+                  height: '40px',
+                  objectFit: 'contain',
+                  transition: 'transform 0.3s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)'
+                  }
+                }}
+              />
+            </RouterLink>
+          </Box>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            {navItems.map((item) => (
+              <NavButton
+                key={item.key}
+                component={RouterLink}
+                to={item.path}
+                active={location.pathname === item.path ? 1 : 0}
+              >
+                {t(`navbar.${item.key}`)}
+              </NavButton>
+            ))}
+          </Box>
+
+          {/* Auth Buttons */}
+          <Box 
+            sx={{ 
+              display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
-              justifyContent: 'center'
+              gap: 1,
+              ml: 3
             }}
           >
-            <img 
-              src="./logo2.png" 
-              alt="NadaPay Logo"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain'
+            <Button
+              component={RouterLink}
+              to="/login"
+              variant="outlined"
+              startIcon={<Login />}
+              sx={{
+                borderRadius: '20px',
+                textTransform: 'none',
+                px: 3,
+                py: 1,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)'
+                }
               }}
-            />
-          </motion.div>
+            >
+              {t('navbar.login')}
+            </Button>
+            <Button
+              component={RouterLink}
+              to="/register"
+              variant="contained"
+              startIcon={<PersonAdd />}
+              sx={{
+                borderRadius: '20px',
+                textTransform: 'none',
+                px: 3,
+                py: 1,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: 3
+                }
+              }}
+            >
+              {t('navbar.register')}
+            </Button>
+            <LanguageButton
+              aria-label="change language"
+              onClick={handleMenuOpen}
+              size="small"
+            >
+              <Language />
+            </LanguageButton>
+          </Box>
 
-          {!isMobile && (
-            <Box sx={{ display: 'flex', ml: 4 }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.key}
-                  component={RouterLink}
-                  to={item.path}
-                  sx={{
-                    mx: 1,
-                    color: location.pathname === item.path ? 'primary.main' : 'text.primary',
-                    fontWeight: location.pathname === item.path ? 600 : 400,
-                  }}
-                >
-                  {t(`navbar.${item.key}`)}
-                </Button>
-              ))}
-            </Box>
-          )}
-        </Box>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button
-            component={RouterLink}
-            to="/login"
-            variant="outlined"
-            sx={{
-              borderColor: 'primary.main',
-              color: 'primary.main',
-              '&:hover': {
-                backgroundColor: 'primary.light',
-                borderColor: 'primary.dark',
-              },
-            }}
-          >
-            {t('navbar.login')}
-          </Button>
-          
-          <Button
-            component={RouterLink}
-            to="/register"
-            variant="contained"
-          >
-            {t('navbar.register')}
-          </Button>
-
+          {/* Mobile Menu Button */}
           <IconButton
-            onClick={() => changeLanguage(isArabic ? 'en' : 'ar')}
+            size="large"
+            aria-label="menu"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            sx={{ display: { md: 'none' }, ml: 2 }}
+          >
+            {mobileOpen ? (
+              <motion.div
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 180 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Close />
+              </motion.div>
+            ) : (
+              <MenuIcon />
+            )}
+          </IconButton>
+        </Toolbar>
+
+        {/* Mobile Menu */}
+        <Slide direction="down" in={mobileOpen} mountOnEnter unmountOnExit>
+          <Box sx={{ 
+            display: { xs: 'flex', md: 'none' }, 
+            flexDirection: 'column',
+            py: 2,
+            gap: 1,
+            backgroundColor: 'background.paper',
+            borderRadius: 2,
+            boxShadow: 3,
+            mt: 1
+          }}>
+            {navItems.map((item) => (
+              <NavButton
+                key={item.key}
+                component={RouterLink}
+                to={item.path}
+                active={location.pathname === item.path ? 1 : 0}
+                fullWidth
+                sx={{ 
+                  justifyContent: 'flex-start',
+                  px: 3,
+                  py: 1.5
+                }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(`navbar.${item.key}`)}
+              </NavButton>
+            ))}
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 1, 
+              px: 2, 
+              pt: 1,
+              borderTop: '1px solid',
+              borderColor: 'divider'
+            }}>
+              <Button
+                component={RouterLink}
+                to="/login"
+                variant="outlined"
+                startIcon={<Login />}
+                fullWidth
+                sx={{ borderRadius: '20px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t('navbar.login')}
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/register"
+                variant="contained"
+                startIcon={<PersonAdd />}
+                fullWidth
+                sx={{ borderRadius: '20px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t('navbar.register')}
+              </Button>
+            </Box>
+          </Box>
+        </Slide>
+
+        {/* Language Menu */}
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleMenuClose}
+          TransitionComponent={Fade}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <MenuItem 
+            onClick={() => changeLanguage('en')}
+            selected={!isArabic}
             sx={{
-              color: 'text.secondary',
-              '&:hover': {
-                backgroundColor: 'action.hover',
-              },
+              '&.Mui-selected': {
+                backgroundColor: 'primary.light',
+              }
             }}
           >
-            <LanguageIcon />
-          </IconButton>
-        </Box>
-      </Toolbar>
-    </AppBar>
+            English
+          </MenuItem>
+          <MenuItem 
+            onClick={() => changeLanguage('ar')}
+            selected={isArabic}
+            sx={{
+              '&.Mui-selected': {
+                backgroundColor: 'primary.light',
+              }
+            }}
+          >
+            العربية
+          </MenuItem>
+        </Menu>
+      </Container>
+    </StyledAppBar>
   );
 };
 
 export default Navbar;
-// import React, { useState } from 'react';
-// import { useTranslation } from 'react-i18next';
-// import { motion } from 'framer-motion';
-// import { AppBar, Toolbar, Button, Box, IconButton, useMediaQuery } from '@mui/material';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import LanguageIcon from '@mui/icons-material/Language';
-
-// const Navbar = () => {
-//   const { t, i18n } = useTranslation();
-//   const isArabic = i18n.language === 'ar';
-//   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
-//   const [mobileOpen, setMobileOpen] = useState(false);
-
-//   const changeLanguage = (lng) => {
-//     i18n.changeLanguage(lng);
-//     document.body.dir = lng === 'ar' ? 'rtl' : 'ltr';
-//   };
-
-//   const navItems = ['products', 'solutions', 'developers', 'pricing'];
-
-//   return (
-//     <AppBar 
-//       position="static"
-//       elevation={0}
-//       sx={{ 
-//         background: 'linear-gradient(135deg, #6C63FF 0%, #4D8AF0 100%)',
-//         color: 'white',
-//         py: 1,
-//         direction: isArabic ? 'rtl' : 'ltr'
-//       }}
-//     >
-//       <Toolbar sx={{ justifyContent: 'space-between', maxWidth: 1280, mx: 'auto', width: '100%' }}>
-//         {/* Logo with gradient border */}
-//         <motion.div whileHover={{ scale: 1.05 }}>
-//           <Box sx={{ 
-//             width: 120, 
-//             height: 40, 
-//             bgcolor: 'white',
-//             borderRadius: 1,
-//             display: 'flex',
-//             alignItems: 'center',
-//             justifyContent: 'center'
-//           }}>
-//             {/* Your logo here
-//              */}
-
-//           </Box>
-//         </motion.div>
-        
-//         {!isMobile && (
-//           <Box sx={{ display: 'flex', gap: 2 }}>
-//             {navItems.map((item) => (
-//               <motion.div
-//                 key={item}
-//                 whileHover={{ y: -2 }}
-//                 whileTap={{ scale: 0.95 }}
-//               >
-//                 <Button 
-//                   color="inherit"
-//                   sx={{ 
-//                     fontWeight: 500,
-//                     '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
-//                   }}
-//                 >
-//                   {t(`navbar.${item}`)}
-//                 </Button>
-//               </motion.div>
-//             ))}
-//           </Box>
-//         )}
-        
-//         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-//           <motion.div whileHover={{ scale: 1.05 }}>
-//             <Button 
-//               variant="outlined"
-//               sx={{
-//                 color: 'white',
-//                 borderColor: 'white',
-//                 '&:hover': { borderColor: 'rgba(255,255,255,0.7)' }
-//               }}
-//             >
-//               {t('navbar.signin')}
-//             </Button>
-//           </motion.div>
-//           <motion.div 
-//             whileHover={{ scale: 1.05 }}
-//             whileTap={{ scale: 0.95 }}
-//           >
-//             <Button 
-//               variant="contained"
-//               sx={{
-//                 bgcolor: 'white',
-//                 color: '#6C63FF',
-//                 fontWeight: 600,
-//                 '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' }
-//               }}
-//             >
-//               {t('navbar.signup')}
-//             </Button>
-//           </motion.div>
-//           <IconButton 
-//             onClick={() => changeLanguage(isArabic ? 'en' : 'ar')}
-//             sx={{ color: 'white' }}
-//           >
-//             <LanguageIcon />
-//           </IconButton>
-//           {isMobile && (
-//             <IconButton onClick={() => setMobileOpen(!mobileOpen)} sx={{ color: 'white' }}>
-//               <MenuIcon />
-//             </IconButton>
-//           )}
-//         </Box>
-//       </Toolbar>
-
-//       {/* Mobile menu */}
-//       {isMobile && mobileOpen && (
-//         <motion.div
-//           initial={{ opacity: 0, height: 0 }}
-//           animate={{ opacity: 1, height: 'auto' }}
-//           exit={{ opacity: 0, height: 0 }}
-//           transition={{ duration: 0.3 }}
-//           style={{ overflow: 'hidden', background: 'rgba(255,255,255,0.1)' }}
-//         >
-//           <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
-//             {navItems.map((item) => (
-//               <Button 
-//                 key={item} 
-//                 color="inherit" 
-//                 fullWidth
-//                 sx={{ justifyContent: isArabic ? 'flex-end' : 'flex-start' }}
-//               >
-//                 {t(`navbar.${item}`)}
-//               </Button>
-//             ))}
-//           </Box>
-//         </motion.div>
-//       )}
-//     </AppBar>
-//   );
-// };
-
-// export default Navbar;

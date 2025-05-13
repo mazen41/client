@@ -1,65 +1,28 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Typography,
-  Button,
   Grid,
   Paper,
-  Divider,
+  Button,
+  Chip,
   List,
   ListItem,
   ListItemIcon,
+  ListItemText
 } from '@mui/material';
-import CheckIcon from '@mui/icons-material/CheckCircleOutline';
-import StarIcon from '@mui/icons-material/Star';
-import { styled } from '@mui/material/styles';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { CheckCircle } from '@mui/icons-material';
+import { motion } from 'framer-motion';
 
-const AnimatedCircle = styled(motion.div)({
-  position: 'absolute',
-  borderRadius: '50%',
-  opacity: 0.2,
-  zIndex: 1,
-});
-
-const OfferCard = styled(Paper)(({ theme, featured }) => ({
-  position: 'relative',
-  padding: theme.spacing(4),
-  borderRadius: 16,
-  boxShadow: featured ? theme.shadows[8] : theme.shadows[4],
-  border: featured ? `2px solid ${theme.palette.secondary.main}` : 'none',
-  transform: featured ? 'scale(1.02)' : 'scale(1)',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    transform: featured ? 'scale(1.05)' : 'scale(1.03)',
-    boxShadow: featured ? theme.shadows[12] : theme.shadows[6]
-  },
-  zIndex: 2,
-  overflow: 'hidden',
-  backgroundColor: theme.palette.background.paper,
-}));
-
-const OfferBadge = styled('div')(({ theme, featured }) => ({
-  position: 'absolute',
-  top: 16,
-  right: -30,
-  backgroundColor: featured ? theme.palette.secondary.main : theme.palette.primary.main,
-  color: theme.palette.common.white,
-  padding: theme.spacing(0.5, 4),
-  transform: 'rotate(45deg)',
-  fontSize: 12,
-  fontWeight: 'bold',
-  width: 120,
-  textAlign: 'center',
-  boxShadow: theme.shadows[2]
-}));
+const MotionBox = motion(Box);
 
 const OffersSection = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const navigate = useNavigate();
+
   const offers = [
     {
       name: 'light',
@@ -70,10 +33,10 @@ const OffersSection = () => {
         t('offers.light.features.0'),
         t('offers.light.features.1'),
         t('offers.light.features.2'),
-        t('offers.light.features.3')
+        t('offers.light.features.3'),
       ],
       featured: false,
-      color: 'primary'
+      color: 'primary',
     },
     {
       name: 'medium',
@@ -85,10 +48,10 @@ const OffersSection = () => {
         t('offers.medium.features.1'),
         t('offers.medium.features.2'),
         t('offers.medium.features.3'),
-        t('offers.medium.features.4')
+        t('offers.medium.features.4'),
       ],
       featured: true,
-      color: 'secondary'
+      color: 'secondary',
     },
     {
       name: 'premium',
@@ -101,150 +64,103 @@ const OffersSection = () => {
         t('offers.premium.features.2'),
         t('offers.premium.features.3'),
         t('offers.premium.features.4'),
-        t('offers.premium.features.5')
+        t('offers.premium.features.5'),
       ],
       featured: false,
-      color: 'primary'
-    }
+      color: 'primary',
+    },
   ];
 
   return (
-    <Box 
-      sx={{ 
+    <Box
+      sx={{
         py: 8,
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundColor: 'background.default'
+        px: 2,
+        background: 'linear-gradient(to bottom right, #f5f7fa, #e4ecf5)',
+        direction: isArabic ? 'rtl' : 'ltr',
       }}
-      dir={isArabic ? 'rtl' : 'ltr'}
     >
-      {/* Background animated circles */}
-      <AnimatedCircle
-        animate={{ x: [0, 40, -40, 0], y: [0, 30, -30, 0] }}
-        transition={{ repeat: Infinity, duration: 10 }}
-        sx={{
-          width: 300,
-          height: 300,
-          backgroundColor: 'primary.main',
-          top: 100,
-          [isArabic ? 'right' : 'left']: -50,
-        }}
-      />
-      <AnimatedCircle
-        animate={{ x: [0, -30, 30, 0], y: [0, -20, 20, 0] }}
-        transition={{ repeat: Infinity, duration: 12 }}
-        sx={{
-          width: 200,
-          height: 200,
-          backgroundColor: 'secondary.main',
-          bottom: 100,
-          [isArabic ? 'left' : 'right']: -30,
-        }}
-      />
-
-      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3 }}>
-        <Typography 
-          variant="h3" 
-          align="center" 
-          gutterBottom 
-          sx={{ 
-            fontWeight: 700,
-            color: 'primary.main',
-            mb: 1
-          }}
-        >
+      <Box textAlign="center" mb={6}>
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
           {t('offers.title')}
         </Typography>
-        <Typography 
-          variant="h6" 
-          align="center" 
-          sx={{ 
-            color: 'text.secondary',
-            mb: 6,
-            maxWidth: 600,
-            mx: 'auto'
-          }}
-        >
+        <Typography variant="subtitle1" color="text.secondary">
           {t('offers.subtitle')}
         </Typography>
+      </Box>
 
-        <Grid container spacing={4} justifyContent="center">
-          {offers.map((offer, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <OfferCard featured={offer.featured}>
-                {offer.featured && (
-                  <OfferBadge featured={offer.featured}>
-                    {t('offers.popular')}
-                  </OfferBadge>
-                )}
-                <Box sx={{ textAlign: 'center', mb: 3 }}>
-                  <StarIcon 
-                    color={offer.featured ? 'secondary' : 'disabled'} 
-                    sx={{ fontSize: 40, mb: 1 }} 
-                  />
-                  <Typography 
-                    variant="h5" 
-                    component="h3" 
-                    sx={{ 
-                      fontWeight: 700,
-                      color: `${offer.color}.main`
-                    }}
-                  >
-                    {offer.title}
-                  </Typography>
-                  <Typography variant="h3" sx={{ fontWeight: 800, my: 2 }}>
-                    {offer.price}
-                  </Typography>
-                  <Typography 
-                    variant="subtitle1" 
-                    sx={{ 
-                      color: 'text.secondary',
-                      mb: 2
-                    }}
-                  >
-                    {offer.period}
-                  </Typography>
-                </Box>
+      <Grid container spacing={4} justifyContent="center">
+        {offers.map((offer, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <MotionBox
+              component={Paper}
+              elevation={offer.featured ? 8 : 3}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              sx={{
+                p: 4,
+                borderRadius: 3,
+                position: 'relative',
+                bgcolor: offer.featured ? 'background.paper' : 'white',
+                height: '100%',
+              }}
+            >
+              {offer.featured && (
+                <Chip
+                  label={t('offers.popular')}
+                  color={offer.color}
+                  size="small"
+                  sx={{
+                    position: 'absolute',
+                    top: 16,
+                    right: 16,
+                    fontWeight: 'bold',
+                  }}
+                />
+              )}
 
-                <Divider sx={{ my: 2 }} />
+              <Box textAlign="center" mb={2}>
+                <Typography variant="h6" color={offer.featured ? 'secondary.main' : 'primary.main'} fontWeight="bold">
+                  {offer.title}
+                </Typography>
+                <Typography variant="h4" fontWeight="bold">
+                  {offer.price}
+                </Typography>
+                <Typography variant="subtitle2" color="text.secondary">
+                  {offer.period}
+                </Typography>
+              </Box>
 
-                <List>
-                  {offer.features.map((feature, i) => (
-                    <ListItem key={i} sx={{ px: 0 }}>
-                      <ListItemIcon sx={{ minWidth: 32 }}>
-                        <CheckIcon color={offer.color} />
-                      </ListItemIcon>
-                      <Typography variant="body1">
-                        {feature}
-                      </Typography>
-                    </ListItem>
-                  ))}
-                </List>
+              <List dense>
+                {offer.features.map((feature, i) => (
+                  <ListItem key={i}>
+                    <ListItemIcon>
+                      <CheckCircle color="success" fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary={feature} />
+                  </ListItem>
+                ))}
+              </List>
 
+              <Box mt={3}>
                 <Button
                   fullWidth
-                  variant={offer.featured ? 'contained' : 'outlined'}
+                  variant="contained"
                   color={offer.color}
-                  size="large"
                   component={RouterLink}
                   to="/register"
-                  sx={{ 
-                    mt: 3,
-                    py: 1.5,
-                    borderRadius: 2,
-                    fontWeight: 700
-                  }}
-                  onClick={() => navigate('/register')}
                 >
                   {t('offers.getStarted')}
                 </Button>
-              </OfferCard>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+              </Box>
+            </MotionBox>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };
 
-export default OffersSection;   
+export default OffersSection;

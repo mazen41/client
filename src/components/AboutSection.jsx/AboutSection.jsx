@@ -1,61 +1,52 @@
+// src/components/AboutSection.jsx
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { Box, Typography, Grid, Paper, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { keyframes } from '@emotion/react';
+import { motion } from 'framer-motion';
 import { AttentionSeeker } from 'react-awesome-reveal';
 
+// Glowing animation
+const loopingGlow = keyframes`
+  0% { text-shadow: 0 0 0px rgba(0, 195, 255, 0.4); transform: scale(1); }
+  50% { text-shadow: 0 0 12px rgba(0, 195, 255, 0.8); transform: scale(1.02); }
+  100% { text-shadow: 0 0 0px rgba(0, 195, 255, 0.4); transform: scale(1); }
+`;
+
+// Stat card
 const StatCard = styled(motion(Paper))(({ theme }) => ({
   padding: theme.spacing(4),
-  borderRadius: '24px',
-  height: '100%',
+  borderRadius: 20,
   textAlign: 'center',
-  background: '#fff',
-  border: `1px solid ${theme.palette.divider}`,
-  transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+  backgroundColor: theme.palette.background.paper,
+  transition: '0.3s',
   '&:hover': {
-    transform: 'translateY(-10px) scale(1.02)',
-    boxShadow: theme.shadows[8],
-    borderColor: theme.palette.primary.main,
+    boxShadow: theme.shadows[6],
+    transform: 'translateY(-5px)',
   },
 }));
 
-const PaymentIcons = styled('div')(({ theme }) => ({
+// Payment logos
+const PaymentIcons = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(6),
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
   gap: theme.spacing(4),
-  marginTop: theme.spacing(4),
   img: {
     width: 60,
     height: 'auto',
     transition: 'transform 0.3s ease',
     '&:hover': {
       transform: 'scale(1.1)',
-    }
-  }
+    },
+  },
 }));
-
-const loopingGlow = keyframes`
-  0% {
-    text-shadow: 0 0 0px rgba(0, 195, 255, 0.4);
-    transform: scale(1);
-  }
-  50% {
-    text-shadow: 0 0 12px rgba(0, 195, 255, 0.8);
-    transform: scale(1.02);
-  }
-  100% {
-    text-shadow: 0 0 0px rgba(0, 195, 255, 0.4);
-    transform: scale(1);
-  }
-`;
 
 const AboutSection = () => {
   const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const stats = [
     { value: '100K+', label: t('about.transactions') },
@@ -65,32 +56,26 @@ const AboutSection = () => {
   ];
 
   return (
-    <Box 
-      id="about-section" // Added this ID for the navbar scroll detection
-      sx={{ 
-        px: { xs: 2, md: 6 }, 
-        py: { xs: 6, md: 10 }, 
-        textAlign: 'center', 
-        backgroundColor: '#f9f9f9',
-        scrollMarginTop: '100px' // Ensures proper scroll positioning
+    <Box
+      id="about-section"
+      sx={{
+        backgroundColor: '#F4FAFD',
+        py: { xs: 6, md: 10 },
+        px: { xs: 2, md: 8 },
+        textAlign: 'center',
       }}
     >
       <AttentionSeeker effect="pulse" triggerOnce>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           <Typography
-            variant="h2"
+            variant="h3"
             sx={{
-              mb: 6,
-              textAlign: 'center',
               fontWeight: 'bold',
-              background: 'linear-gradient(90deg, #007cf0, #00dfd8)',
+              background: 'linear-gradient(90deg, #1976D2, #00BCD4)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               animation: `${loopingGlow} 3s ease-in-out infinite`,
+              mb: 6,
             }}
           >
             {t('about.title')}
@@ -108,16 +93,10 @@ const AboutSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <Typography
-                variant="h3"
-                color="primary"
-                sx={{ fontWeight: 'bold', mb: 1 }}
-              >
+              <Typography variant="h4" color="primary" fontWeight="bold" gutterBottom>
                 {stat.value}
               </Typography>
-              <Typography color="text.secondary" fontSize="1rem">
-                {stat.label}
-              </Typography>
+              <Typography color="text.secondary">{stat.label}</Typography>
             </StatCard>
           </Grid>
         ))}

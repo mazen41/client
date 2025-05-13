@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,39 @@
 
 .read-the-docs {
   color: #888;
+} */
+/* Add this to your main CSS file */
+/* .dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+} */
+
+.sidebar {
+  height: calc(100vh - 52px); /* Adjust based on your navbar height */
+  overflow-y: auto;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-right: 1px solid #dbdbdb;
 }
+
+/* RTL support for Arabic */
+/* html[dir="rtl"] .navbar-start {
+  margin-right: unset;
+  margin-left: auto;
+}
+
+html[dir="rtl"] .navbar-dropdown.is-right {
+  left: unset;
+  right: 0;
+}
+
+/* Adjustments for Arabic UI */
+html[dir="rtl"] .menu-list a {
+  padding: 0.5em 1em 0.5em 2em;
+}
+
+html[dir="rtl"] .menu-list a:before {
+  right: 0.75em;
+  left: unset;
+} 

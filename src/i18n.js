@@ -2,375 +2,1134 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const resources = {
-    en: {
-        translation: {
-            "navbar": {
-                "home": "Home",
-                "about": "About",
-                "services": "Services",
-                "why": "Why Us",
-                "login": "Login",
-                "register": "Register"
-            },
-            "hero": {
-                "title": "Smarter Payments with NadaPay",
-                "subtitle": "Accept payments easily via secure gateways and payment links. Supports Mada, Visa, Mastercard, Apple Pay, and STC Pay.",
-                "cta1": "Start Now",
-                "cta2": "Contact Us"
-            },
-            "about": {
-                "title": "About NadaPay",
-                "content": "NadaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely. Whether you run an online store or offer services, our platform helps you get paid through customized gateways and instant payment links."
-            },
-            "services": {
-                "title": "Our Services",
-                "items": [
-                    {
-                        "title": "Online Payment Gateways",
-                        "description": "Fully integrated and secure gateways for websites and mobile apps."
-                    },
-                    {
-                        "title": "Payment Links",
-                        "description": "Create and send payment links in seconds—no website needed."
-                    },
-                    {
-                        "title": "Multi-Card Support",
-                        "description": "Accept payments via Mada, Visa, Mastercard, Apple Pay, and STC Pay."
-                    },
-                    {
-                        "title": "Dashboard & Analytics",
-                        "description": "Monitor transactions and generate reports with ease."
-                    }
-                ]
-            },
-            "why": {
-                "title": "Why Choose NadaPay?",
-                "items": [
-                    "Easy Integration",
-                    "Real-Time Transaction Tracking",
-                    "PCI-DSS Certified",
-                    "Transparent Pricing"
-                ]
-            },
-            "login": {
-                "title": "Sign in to NadaPay",
-                "subtitle": "Enter your details to access your account",
-                "email": "Email Address",
-                "password": "Password",
-                "forgotPassword": "Forgot password?",
-                "signIn": "Sign In",
-                "or": "OR",
-                "noAccount": "Don't have an account?",
-                "createAccount": "Create account"
-            },
-            "register": {
-                "title": "Create Account",
-                "subtitle": "Get started with NadaPay in minutes",
-                "fullName": "Full Name",
-                "email": "Email Address",
-                "password": "Password",
-                "company": "Company (Optional)",
-                "createAccount": "Create Account",
-                "or": "OR",
-                "haveAccount": "Already have an account?",
-                "signIn": "Sign in",
-                "businessDetails": "Business Details",
-                "clientType": "Client Type",
-                "individual": "Individual",
-                "institution": "Institution",
-                "companyType": "Company",
-                "idNumber": "ID Number",
-                "freelanceDoc": "Freelance Document",
-                "nationalAddress": "National Address",
-                "institutionId": "Institution ID",
-                "commercialLicense": "Commercial License",
-                "crNumber": "Commercial Registration Number",
-                "articlesOfAssociation": "Articles of Association",
-                "completeRegistration": "Complete Registration",
-                "accountInfo": "Account Information",
-                "bankDetails": "Bank Details",
-                "companyDetails": "Company Details",
-                "confirmPassword": "Confirm Password",
-                "userType": "User Type",
-                "bankAccountName": "Bank Account Name",
-                "bankName": "Bank Name",
-                "accountNumber": "Account Number",
-                "iban": "IBAN",
-                "companyName": "Company Name",
-                "companyEmail": "Company Email",
-                "companyNumber": "Company Number",
-                "companyType": "Company Type",
-                "llc": "Limited Liability Company (LLC)",
-                "soleEstablishment": "Sole Establishment",
-                "jointStock": "Joint Stock Company",
-                "next": "Next",
-                "back": "Back",
-                "completeRegistration": "Complete Registration",
-                "fillAllFields": "Please fill all required fields",
-                "passwordsDontMatch": "Passwords don't match",
-                "registrationFailed": "Registration failed. Please try again.",
-                "ibanHelper": "Enter your IBAN number (e.g., SA0380000000608010167519)"
+  en: {
+    translation: {
+      // Navbar translations
+      "navbar": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "why": "Why Us",
+        "login": "Login",
+        "register": "Register",
+        "create": "Create",
+        "createInvoice": "Create Invoice",
+        "quickInvoice": "Quick Invoice",
+        "batchInvoice": "Batch Invoice",
+        "paymentLink": "Payment Link",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+      },
 
-            },
-            "footer": {
-                "about": {
-                    "title": "About NadaPay",
-                    "description": "Leading payment solutions for modern businesses. Secure, fast and reliable transactions."
-                },
-                "links": {
-                    "title": "Quick Links",
-                    "home": "Home",
-                    "about": "About Us",
-                    "services": "Services",
-                    "contact": "Contact"
-                },
-                "legal": {
-                    "title": "Legal",
-                    "terms": "Terms of Service",
-                    "privacy": "Privacy Policy",
-                    "cookies": "Cookie Policy"
-                },
-                "social": {
-                    "title": "Follow Us"
-                },
-                "newsletter": "Subscribe to our newsletter for updates",
-                "copyright": "© {year} NadaPay. All rights reserved."
-            },
-            "offers": {
-                "title": "Choose Your Plan",
-                "subtitle": "Flexible pricing options to suit your business needs",
-                "popular": "Popular",
-                "getStarted": "Get Started",
-                "light": {
-                    "title": "Light",
-                    "price": "$9.99",
-                    "period": "per month",
-                    "features": [
-                        "Up to 100 transactions/month",
-                        "Basic payment links",
-                        "Email support",
-                        "Standard security"
-                    ]
-                },
-                "medium": {
-                    "title": "Medium",
-                    "price": "$29.99",
-                    "period": "per month",
-                    "features": [
-                        "Up to 500 transactions/month",
-                        "Advanced payment links",
-                        "Priority email support",
-                        "Enhanced security",
-                        "Basic analytics"
-                    ]
-                },
-                "premium": {
-                    "title": "Premium",
-                    "price": "$99.99",
-                    "period": "per month",
-                    "features": [
-                        "Unlimited transactions",
-                        "Custom payment solutions",
-                        "24/7 phone support",
-                        "Enterprise-grade security",
-                        "Advanced analytics",
-                        "Dedicated account manager"
-                    ]
-                }
-            }
+      // Sidebar translations
+      "sidebar": {
+        "dashboard": "Dashboard",
+        "overview": "Overview",
+        "payment": "PAYMENT",
+        "invoices": "Invoices",
+        "orders": "Orders",
+        "transactions": "Transactions",
+        "deposits": "Deposits",
+        "refunds": "Refunds",
+        "accountStatements": "Account Statements",
+        "paymentLinks": "Payment Links",
+        "batchInvoices": "Batch Invoices",
+        "management": "MANAGEMENT",
+        "products": "Products",
+        "customers": "Customers",
+        "pos": "POS",
+        "business": "BUSINESS",
+        "businessProfile": "Business Profile",
+        "address": "Address",
+        "users": "Users",
+        "suppliers": "Suppliers",
+        "others": "OTHERS",
+        "integrations": "Integrations",
+        "settings": "Settings",
+        "contact": "Contact",
+        "suppliersList": "Suppliers List",
+        "suppliersDepoist": "Suppliers Depoists",
+        "productLinks": "Product Links",
+        "categories": "Categories",
+        "deliveryAreas": "Delivery Areas",
+        "workTime": "Work Time",
+        "refundList": "Refund List",
+        "makeRefund": "Make Refund",
+        "refundApprovals": "Refund Approvals",
+        "buildRefunds": "Build Refunds",
+        "importCustomers": "Import Customers",
+        "terminals": "Terminals",
+        "posTransactions": "POS Transactions",
+        "posDeposits": "POS Deposits",
+        "updateProfile": "Update Profile",
+        "commissionCharges": "Commission Charges",
+        "usersList": "Users List",
+        "manageMultiLogin": "Manage Multi Login",
+        "approveMultiLogin": "Approve Multi Login"
+      },
 
+      // Public pages translations
+      "hero": {
+        "title": "Smarter Payments with NadaPay",
+        "subtitle": "Accept payments easily via secure gateways and payment links. Supports Mada, Visa, Mastercard, Apple Pay, and STC Pay.",
+        "cta1": "Start Now",
+        "cta2": "Contact Us"
+      },
+      "about": {
+        "title": "About NadaPay",
+        "content": "NadaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely."
+      },
+      "services": {
+        "title": "Our Services",
+        "items": [
+          {
+            "title": "Online Payment Gateways",
+            "description": "Fully integrated and secure gateways for websites and mobile apps."
+          },
+          {
+            "title": "Payment Links",
+            "description": "Create and send payment links in seconds—no website needed."
+          },
+          {
+            "title": "Multi-Card Support",
+            "description": "Accept payments via Mada, Visa, Mastercard, Apple Pay, and STC Pay."
+          },
+          {
+            "title": "Dashboard & Analytics",
+            "description": "Monitor transactions and generate reports with ease."
+          }
+        ]
+      },
+      "why": {
+        "title": "Why Choose NadaPay?",
+        "items": [
+          "Easy Integration",
+          "Real-Time Transaction Tracking",
+          "PCI-DSS Certified",
+          "Transparent Pricing"
+        ]
+      },
 
-        }
-    },
-    ar: {
-        translation: {
-            "navbar": {
-                "home": "الصفحة الرئيسية",
-                "about": "من نحن",
-                "services": "خدماتنا",
-                "why": "لماذا نحن",
-                "login": "تسجيل الدخول",
-                "register": "تسجيل"
-            },
-            "hero": {
-                "title": "مدفوعات أذكى مع NadaPay",
-                "subtitle": "استقبل المدفوعات بكل سهولة عبر بوابات دفع آمنة وروابط دفع مباشرة. ندعم مدى، فيزا، ماستركارد، Apple Pay وSTC Pay.",
-                "cta1": "ابدأ الآن",
-                "cta2": "تواصل معنا"
-            },
-            "about": {
-                "title": "من نحن",
-                "content": "NadaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان. سواء كنت تدير متجرًا إلكترونيًا أو تقدم خدمات، منصتنا تساعدك على تحصيل مدفوعاتك بسهولة عبر بوابات دفع مخصصة وروابط فورية."
-            },
-            "services": {
-                "title": "خدماتنا",
-                "items": [
-                    {
-                        "title": "بوابات الدفع الإلكتروني",
-                        "description": "بوابات متكاملة وآمنة للمواقع الإلكترونية والتطبيقات."
-                    },
-                    {
-                        "title": "روابط الدفع",
-                        "description": "أنشئ وأرسل روابط الدفع خلال ثوانٍ – بدون الحاجة إلى موقع إلكتروني."
-                    },
-                    {
-                        "title": "دعم جميع البطاقات",
-                        "description": "قبول المدفوعات عبر مدى، فيزا، ماستركارد، Apple Pay وSTC Pay."
-                    },
-                    {
-                        "title": "لوحة تحكم وتحليلات",
-                        "description": "راقب العمليات المالية واطلع على تقارير مفصلة بسهولة."
-                    }
-                ]
-            },
-            "why": {
-                "title": "لماذا NadaPay؟",
-                "items": [
-                    "تكامل سهل",
-                    "تتبع المعاملات في الوقت الفعلي",
-                    "معتمد PCI-DSS",
-                    "أسعار شفافة"
-                ]
-            },
-            "login": {
-                "title": "تسجيل الدخول إلى NadaPay",
-                "subtitle": "أدخل بياناتك للوصول إلى حسابك",
-                "email": "البريد الإلكتروني",
-                "password": "كلمة المرور",
-                "forgotPassword": "نسيت كلمة المرور؟",
-                "signIn": "تسجيل الدخول",
-                "or": "أو",
-                "noAccount": "ليس لديك حساب؟",
-                "createAccount": "إنشاء حساب"
-            },
-            "register": {
-                "title": "إنشاء حساب",
-                "subtitle": "ابدأ مع NadaPay في دقائق",
-                "fullName": "الاسم الكامل",
-                "email": "البريد الإلكتروني",
-                "password": "كلمة المرور",
-                "company": "الشركة (اختياري)",
-                "createAccount": "إنشاء حساب",
-                "or": "أو",
-                "haveAccount": "لديك حساب بالفعل؟",
-                "signIn": "تسجيل الدخول",
-                "businessDetails": "تفاصيل العمل",
-                "clientType": "نوع العميل",
-                "individual": "أفراد",
-                "institution": "مؤسسة",
-                "companyType": "شركة",
-                "idNumber": "رقم الهوية",
-                "freelanceDoc": "وثيقة العمل الحر",
-                "nationalAddress": "العنوان الوطني",
-                "institutionId": "رقم المؤسسة",
-                "commercialLicense": "السجل التجاري",
-                "crNumber": "رقم السجل التجاري",
-                "articlesOfAssociation": "نظام التأسيس",
-                "completeRegistration": "إكمال التسجيل",
-                "accountInfo": "معلومات الحساب",
-                "bankDetails": "تفاصيل البنك",
-                "companyDetails": "تفاصيل الشركة",
-                "confirmPassword": "تأكيد كلمة المرور",
-                "userType": "نوع المستخدم",
-                "bankAccountName": "اسم صاحب الحساب البنكي",
-                "bankName": "اسم البنك",
-                "accountNumber": "رقم الحساب",
-                "iban": "رقم الآيبان",
-                "companyName": "اسم الشركة",
-                "companyEmail": "بريد الشركة الإلكتروني",
-                "companyNumber": "رقم الشركة",
-                "companyType": "نوع الشركة",
-                "llc": "شركة ذات مسؤولية محدودة",
-                "soleEstablishment": "منشأة فردية",
-                "jointStock": "شركة مساهمة",
-                "next": "التالي",
-                "back": "رجوع",
-                "completeRegistration": "إكمال التسجيل",
-                "fillAllFields": "يرجى ملء جميع الحقول المطلوبة",
-                "passwordsDontMatch": "كلمات المرور غير متطابقة",
-                "registrationFailed": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
-                "ibanHelper": "أدخل رقم الآيبان الخاص بك (مثال: SA0380000000608010167519)"
-            },
-            "footer": {
-                "about": {
-                    "title": "عن ناداباي",
-                    "description": "حلول دفع رائدة للشركات الحديثة. معاملات آمنة وسريعة وموثوقة."
-                },
-                "links": {
-                    "title": "روابط سريعة",
-                    "home": "الرئيسية",
-                    "about": "من نحن",
-                    "services": "الخدمات",
-                    "contact": "اتصل بنا"
-                },
-                "legal": {
-                    "title": "قانوني",
-                    "terms": "شروط الخدمة",
-                    "privacy": "سياسة الخصوصية",
-                    "cookies": "سياسة الكوكيز"
-                },
-                "social": {
-                    "title": "تابعنا"
-                },
-                "newsletter": "اشترك في نشرتنا البريدية للحصول على التحديثات",
-                "copyright": "© {year} ناداباي. جميع الحقوق محفوظة."
-            },
-            "offers": {
-                "title": "اختر خطتك",
-                "subtitle": "خيارات تسعير مرنة تناسب احتياجات عملك",
-                "popular": "الأكثر شيوعاً",
-                "getStarted": "ابدأ الآن",
-                "light": {
-                    "title": "خفيفة",
-                    "price": "٣٩ ر.س",
-                    "period": "شهرياً",
-                    "features": [
-                        "حتى ١٠٠ معاملة/شهر",
-                        "روابط دفع أساسية",
-                        "دعم عبر البريد",
-                        "حماية قياسية"
-                    ]
-                },
-                "medium": {
-                    "title": "متوسطة",
-                    "price": "١١٩ ر.س",
-                    "period": "شهرياً",
-                    "features": [
-                        "حتى ٥٠٠ معاملة/شهر",
-                        "روابط دفع متقدمة",
-                        "دعم بريد أولوية",
-                        "حماية محسنة",
-                        "تحليلات أساسية"
-                    ]
-                },
-                "premium": {
-                    "title": "ممتازة",
-                    "price": "٣٩٩ ر.س",
-                    "period": "شهرياً",
-                    "features": [
-                        "معاملات غير محدودة",
-                        "حلول دفع مخصصة",
-                        "دعم هاتفي ٢٤/٧",
-                        "حماية مستوى مؤسسي",
-                        "تحليلات متقدمة",
-                        "مدير حساب مخصص"
-                    ]
-                }
-            }
+      // Auth translations
+      "login": {
+        "title": "Sign in to NadaPay",
+        "subtitle": "Enter your details to access your account",
+        "email": "Email Address",
+        "password": "Password",
+        "forgotPassword": "Forgot password?",
+        "signIn": "Sign In",
+        "or": "OR",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create account"
+      },
+      "register": {
+        "title": "Create Account",
+        "subtitle": "Get started with NadaPay in minutes",
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "password": "Password",
+        "company": "Company (Optional)",
+        "createAccount": "Create Account",
+        "or": "OR",
+        "haveAccount": "Already have an account?",
+        "signIn": "Sign in",
+        "bankAccountName":"Bank Account Name",
+        "bankName":"Bank Name",
+        "accountNumber":"Account Number",
+        "iban":"Iban Number",
+        "ibanHelper":"Please enter your IBAN. Example: GB29XABC10161234567801",
+        "completeRegistration": "Sign in",
+        // "userType": 
+        
+      },
 
-        }
+      // Dashboard translations
+      "dashboard": {
+        "welcome": "Welcome",
+        "awaitingBalance": "Awaiting Balance",
+        "awaitingTransfer": "Awaiting Transfer",
+        "disputeAmount": "Dispute Amount",
+        "lastPayments": "Last 5 Payments",
+        "grossValue": "Gross Value",
+        "netValue": "Net Value",
+        "successful": "Successful",
+        "failed": "Failed",
+        "totalRefund": "Total Refund",
+        "totalDeposit": "Total Deposit",
+        "totalPaid": "Total Paid",
+        "grossNetChart": "Gross vs Net Value",
+        "successFailedChart": "Successful vs Failed Transactions",
+        "financialSummary": "Financial Summary",
+        "paymentMethods": "Payment Methods Distribution",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "last7Days": "Last 7 Days",
+        "last30Days": "Last 30 Days",
+        "thisMonth": "This Month",
+        "lastMonth": "Last Month"
+      },
+
+      // Table translations
+      "id": "ID",
+      "date": "Date",
+      "customer": "Customer",
+      "amount": "Amount",
+      "status": "Status",
+      "paymentMethod": "Payment Method",
+      "dueDate": "Due Date",
+      "actions": "Actions",
+      "items": "Items",
+      "type": "Type",
+      "method": "Method",
+      "reference": "Reference",
+      "createInvoice": "Create Invoice",
+      "requestPickup": "Request Pickup",
+      "export": "Export",
+      "exportExcel": "Export to Excel",
+      "exportPDF": "Export to PDF",
+      "print": "Print",
+      "deposits": "Deposits",
+      "deposit_date": "Deposit Date",
+      "bank_name": "Bank Name",
+      "total_value": "Total Value",
+      "notification_sent": "Is Notification Sent?",
+      "resend_email": "Resend Email",
+      "copy": "Copy",
+      "yes": "Yes",
+      "no": "No",
+      "links": "Product Links",
+      "createProductLink": "Create Product Link",
+      "nameEnglish": "Name (English)",
+      "nameArabic": "Name (Arabic)",
+      "englishUrl": "English URL",
+      "arabicUrl": "Arabic URL",
+      "status": "Status",
+      "actions": "Actions",
+      "createCategory": "Create Category",
+      "nameEnglish": "Category Name (English)",
+      "nameArabic": "Category Name (Arabic)",
+      "noOfProducts": "Number of Products",
+      "status": "Status",
+      "actions": "Actions",
+      "createDeliveryArea": "Create Delivery Area",
+      "city": "City",
+      "areaName": "Area Name",
+      "deliveryFee": "Delivery Fee",
+      "minOrders": "Minimum Orders",
+      "actions": "Actions",
+      "title": "Work Time Management",
+      "showing": "Showing",
+      "workTimes": "work times",
+      "allStatuses": "All Statuses",
+      "moreFilters": "More Filters",
+      "refresh": "Refresh",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "create": "Create",
+      "noWorkTimesFound": "No work times found",
+      "searchPlaceholder": "Search work times...",
+      "createWorkTime": "Create Work Time",
+      "active": "Active",
+      "inactive": "Inactive",
+      "actions": "Actions",
+      "import": "Import",
+      "category": "Product Category",
+      "active": "Active",
+      "inactive": "Inactive",
+      "attachFile": "Attach File",
+      "create": "Create",
+      "links": "Product Links",
+      "createProductLink": "Create Product Link",
+      "nameEnglish": "Name (English)",
+      "nameArabic": "Name (Arabic)",
+      "englishUrl": "English URL",
+      "arabicUrl": "Arabic URL",
+      "status": "Status",
+      "actions": "Actions",
+      "title": "Products",
+      "createCategory": "Create Category",
+      "nameEnglish": "Category Name (English)",
+      "nameArabic": "Category Name (Arabic)",
+      "noOfProducts": "Number of Products",
+      "status": "Status",
+      "actions": "Actions",
+      "createDeliveryArea": "Create Delivery Area",
+      "city": "City",
+      "areaName": "Area Name",
+      "deliveryFee": "Delivery Fee",
+      "minOrders": "Minimum Orders",
+      "actions": "Actions",
+      "createWorkTime": "Create Work Time",
+      "day": "Day",
+      "workTime": "Work Time",
+      "closeTime": "Close Time",
+      "shift2OpenTime": "Shift 2 Open Time",
+      "shift2CloseTime": "Shift 2 Close Time",
+      "actions": "Actions",
+      "import": "Import",
+      "category": "Product Category",
+      "active": "Active",
+      "inactive": "Inactive",
+      "attachFile": "Attach File",
+      "create": "Create",
+      "showing": "Showing",
+      "categories": "categories",
+      "allStatuses": "All Statuses",
+      "moreFilters": "More Filters",
+      "refresh": "Refresh",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "create": "Create",
+      "workTimePage": {
+        "title": "Work Time Management",
+        "showing": "Showing",
+        "workTimes": "work times",
+        "allStatuses": "All Statuses",
+        "moreFilters": "More Filters",
+        "refresh": "Refresh",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "create": "Create",
+        "noWorkTimesFound": "No work times found",
+        "searchPlaceholder": "Search work times...",
+        "createWorkTime": "Create Work Time",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "customersPage": {
+        "title": "Customers Management",
+        "showing": "Showing",
+        "customers": "customers",
+        "allStatuses": "All Statuses",
+        "moreFilters": "More Filters",
+        "refresh": "Refresh",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "create": "Create",
+        "noCustomersFound": "No customers found",
+        "searchPlaceholder": "Search customers...",
+        "createCustomer": "Create Customer",
+        "active": "Active",
+        "inactive": "Inactive",
+        "fullName": "Full Name",
+        "mobile": "Mobile Number",
+        "reference": "Customer Reference",
+        "email": "Email",
+        "bankDetails": "Bank Details"
+      },
+      refund: {
+        refundList: "Refund List",
+        makeRefund: "Make Refund",
+        refundApproval: "Refund Approval",
+        bulkRefunds: "Bulk Refunds",
+        refundRef: "Refund Ref.",
+        invoiceRef: "Invoice Ref.",
+        txnRef: "Txn Ref No",
+        vendorPays: "Vendor Pays",
+        customerReceives: "Customer Receives",
+        invoiceId: "Invoice ID",
+        createdBy: "Created By",
+        uploadRefundFile: "Upload Refund File",
+        uploadInstructions: "Upload a CSV file containing refund details",
+      },
+      common: {
+        search: "Search...",
+        filter: "Filter",
+        print: "Print",
+        copy: "Copy",
+        export: "Export",
+        date: "Date",
+        customer: "Customer",
+        amount: "Amount",
+        currency: "Currency",
+        actions: "Actions",
+        status: "Status",
+        pending: "Pending",
+        completed: "Completed",
+        approve: "Approve",
+        reject: "Reject",
+        showing: "Showing",
+        of: "of",
+        allStatuses: "All Statuses",
+        selectFile: "Select File",
+        save: "save"
+      },
+      customers: {
+        importCustomers: "Import Customers",
+        uploadCustomerFile: "Upload Customer File",
+        uploadInstructions: "Upload a CSV file containing customer details"
+      },
+      terminals: {
+        title: "Terminals Management",
+        terminalNo: "Terminal No",
+        name: "Terminal Name",
+        rentType: "Rent Type",
+        rentValue: "Rent Value",
+        startDate: "Start Date",
+        endDate: "End Date"
+      },
+      profile: {
+        updateProfile: "Update Profile",
+        businessDetails: "Business Details",
+        updateImage: "Update Image",
+        companyName: "Company Name",
+        category: "Category",
+        defaultLanguage: "Default Language",
+        workPhone: "Work Phone",
+        workEmail: "Work Email",
+        websiteUrl: "Website URL",
+        deliveryFees: "Delivery Fees",
+        invoiceExpiry: "Invoice Expiry",
+        hours: "Hours",
+        days: "Days",
+        minutes: "Minutes",
+        customSmsText: "Custom SMS Text",
+        termsConditions: "Terms & Conditions",
+        bankDetails: "Bank Account Details",
+        bankAccountHolder: "Account Holder Name",
+        bankAccountNumber: "Account Number",
+        iban: "IBAN",
+        bankName: "Bank Name",
+        socialMedia: "Social Media Accounts",
+        platform: "Platform",
+        accountName: "Account Name",
+        addAccount: "Add New Account",
+        invoiceSettings: "Invoice Settings",
+        enableDetailedInvoice: "Enable Detailed Invoice Page",
+        enableSimpleCheckout: "Enable Simple Checkout Page",
+        showAllCurrencies: "Show All Currencies",
+        enableCardView: "Enable Card View",
+        displayVatDetails: "Display VAT Details"
+      },
+      users: {
+        title: "Users Management",
+        addUser: "Add User",
+        fullName: "Full Name",
+        email: "Email",
+        phone: "Phone Number",
+        country: "Country",
+        isEnabled: "Is Enabled"
+      },
+      suppliers: {
+        title: "Suppliers Management",
+        addSupplier: "Add Supplier",
+        code: "Code",
+        name: "Supplier Name",
+        commission: "Commission",
+        commissionPercent: "Commission %",
+        depositTerms: "Deposit Terms",
+        approvalStatus: "Approval Status",
+        depositsTitle: "Suppliers Deposits",
+        supplierName: "Supplier Name",
+        depositRef: "Deposit Reference",
+        totalValue: "Total Value",
+        depositDate: "Deposit Date",
+        bankDetails: "Bank Details",
+        approved: "Approved",
+        pending: "Pending"
+      },
+      "commissionCharger": "Commission Charger",
+      "bankDetails": "Bank Details",
+      "accountHolderName": "Account Holder Name",
+      "bankAccount": "Bank Account",
+      "iban": "IBAN",
+      "bankName": "Bank Name",
+      "debitEnabled": "Is Debit Enabled",
+      "creditEnabled": "Is Credit Enabled",
+      "yes": "Yes",
+      "no": "No",
+      "paymentMethod": "Payment Method",
+      "method": "Method",
+      "commissionFrom": "Commission From",
+      "note": "Note",
+      "isActive": "Is Active",
+      "bankTransfer": "Bank Transfer",
+      "sender": "Sender",
+      "bankNote": "Ensure the account name matches exactly.",
+
+      "day": "Day",
+      "workTime": "Work Time",
+      "closeTime": "Close Time",
+      "shift2OpenTime": "Shift 2 Open Time",
+      "shift2CloseTime": "Shift 2 Close Time",
+      "status": "Status",
+      "actions": "Actions",
+      address: {
+        title: "Address Management",
+        addAddress: "Add Address",
+        type: "Address Type",
+        city: "City",
+        area: "Area Name",
+        street: "Avenue/Street",
+        details: "Details",
+        instructions: "Instructions"
+      },
+      contact: {
+        title: "Contact Management",
+        contactDetails: "Contact Details",
+        sales: "Sales Contact",
+        support: "Support Contact",
+        complaintsAddresses: "Complaints & Addresses",
+        leaveMessage: "Submit",
+        fullName: "Full Name",
+        mobile: "Mobile Number",
+        email: "Email",
+        supportType: "Support Type",
+        accountVerification: "Account Verification",
+        inquiryRequest: "Inquiry/Service Request",
+        financial: "Financial",
+        technical: "Technical",
+        message: "Your Message",
+        submit: "Submit Message",
+        bankDetails: "Bank Details",
+        accountHolder: "Account Holder Name",
+        accountNumber: "Account Number",
+        iban: "IBAN",
+        bankName: "Bank Name",
+        uploadImage: "Upload Bank Document"
+      },
+      "deliveryAreasPage": {
+        "title": "Delivery Areas Management",
+        "currency": "SAR",
+        "showing": "Showing",
+        "deliveryAreas": "delivery areas",
+        "allCities": "All Cities",
+        "moreFilters": "More Filters",
+        "refresh": "Refresh",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "create": "Create",
+        "noAreasFound": "No delivery areas found",
+        "searchPlaceholder": "Search areas..."
+      },
+      "accountStatement": {
+        "title": "Account Statement",
+        "date": "Date",
+        "reference": "Reference No.",
+        "description": "Description",
+        "debit": "Debit",
+        "credit": "Credit",
+        "balance": "Balance",
+        "search": "Search in statements...",
+        "copied": "Copied to clipboard"
+      },
+      "paymentLinks": {
+        "title": "Payment Links",
+        "customizeInvoice": "Customize Invoice Template",
+        "createPaymentLink": "Create Payment Link",
+        "search": "Search payment links...",
+        "link": "Payment Link",
+        "createdAt": "Created At",
+        "amount": "Payment Amount",
+        "currency": "Currency",
+        "isOpen": "Open Amount",
+        "language": "Language",
+        "views": "Views",
+        "copied": "Copied to clipboard"
+      },
+      "search": "Search",
+      "all": "All",
+      "stockable": "Stockable",
+      "nonStockable": "Non-Stockable",
+      "createOrder": "Create Order",
+      "nameEn": "Name (EN)",
+      "nameAr": "Name (AR)",
+      "category": "Category",
+      "price": "Price",
+      "quantity": "Quantity",
+
+      // Statuses
+      "statuses": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded",
+        "cancelled": "Cancelled",
+        "shipped": "Shipped",
+        "processing": "Processing"
+      },
+
+      // Payment methods
+      "paymentMethods": {
+        "mada": "Mada",
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "applepay": "Apple Pay",
+        "stcpay": "STC Pay"
+      },
+
+      // Footer translations
+      "footer": {
+        "about": {
+          "title": "About NadaPay",
+          "description": "Leading payment solutions for modern businesses. Secure, fast and reliable transactions."
+        },
+        "links": {
+          "title": "Quick Links",
+          "home": "Home",
+          "about": "About Us",
+          "services": "Services",
+          "contact": "Contact"
+        },
+        "legal": {
+          "title": "Legal",
+          "terms": "Terms of Service",
+          "privacy": "Privacy Policy",
+          "cookies": "Cookie Policy"
+        },
+        "social": {
+          "title": "Follow Us"
+        },
+        "newsletter": "Subscribe to our newsletter for updates",
+        "copyright": "© {year} NadaPay. All rights reserved."
+      }
     }
+  },
+  ar: {
+    translation: {
+      // Navbar translations
+      "navbar": {
+        "home": "الصفحة الرئيسية",
+        "about": "من نحن",
+        "services": "خدماتنا",
+        "why": "لماذا نحن",
+        "login": "تسجيل الدخول",
+        "register": "تسجيل",
+        "create": "إنشاء",
+        "createInvoice": "إنشاء فاتورة",
+        "quickInvoice": "فاتورة سريعة",
+        "batchInvoice": "فاتورة جماعية",
+        "paymentLink": "رابط دفع",
+        "profile": "الملف الشخصي",
+        "settings": "الإعدادات",
+        "logout": "تسجيل الخروج"
+      },
+
+      // Sidebar translations
+      "sidebar": {
+        "dashboard": "لوحة التحكم",
+        "overview": "نظرة عامة",
+        "payment": "الدفع",
+        "invoices": "الفواتير",
+        "orders": "الطلبات",
+        "transactions": "المعاملات",
+        "deposits": "الودائع",
+        "refunds": "المبالغ المستردة",
+        "accountStatements": "كشوف الحساب",
+        "paymentLinks": "روابط الدفع",
+        "batchInvoices": "فواتير الدُفعات",
+        "management": "الإدارة",
+        "products": "المنتجات",
+        "customers": "العملاء",
+        "pos": "نقطة البيع",
+        "business": "الأعمال",
+        "businessProfile": "الملف التجاري",
+        "address": "العنوان",
+        "users": "المستخدمون",
+        "suppliers": "الموردون",
+        "others": "أخرى",
+        "integrations": "التكاملات",
+        "settings": "الإعدادات",
+        "contact": "اتصل بنا",
+        "suppliersList": "قائمة الموردين",
+        "suppliersDepoists": "ودائع الموردين",
+        "productLinks": "روابط المنتجات",
+        "categories": "الفئات",
+        "deliveryAreas": "مناطق التوصيل",
+        "workTime": "ساعات العمل",
+        "refundList": "قائمة المرتجعات",
+        "makeRefund": "إنشاء مرتجع",
+        "refundApprovals": "الموافقات على المرتجعات",
+        "buildRefunds": "بناء المرتجعات",
+        "importCustomers": "استيراد العملاء",
+        "terminals": "الأجهزة",
+        "posTransactions": "معاملات نقاط البيع",
+        "posDeposits": "إيداعات نقاط البيع",
+        "updateProfile": "تحديث الملف",
+        "commissionCharges": "رسوم العمولة",
+        "usersList": "قائمة المستخدمين",
+        "manageMultiLogin": "إدارة تسجيلات الدخول المتعددة",
+        "approveMultiLogin": "الموافقة على تسجيلات الدخول المتعددة"
+      },
+      "products": {
+        "links": "روابط المنتجات",
+        "createProductLink": "إنشاء رابط منتج",
+        "nameEnglish": "الاسم (بالإنجليزية)",
+        "nameArabic": "الاسم (بالعربية)",
+        "englishUrl": "الرابط (بالإنجليزية)",
+        "arabicUrl": "الرابط (بالعربية)",
+        "status": "الحالة",
+        "actions": "العمليات",
+        "title": "المنتجات"
+      },
+      "categories": {
+        "createCategory": "إنشاء فئة",
+        "nameEnglish": "اسم الفئة (بالإنجليزية)",
+        "nameArabic": "اسم الفئة (بالعربية)",
+        "noOfProducts": "عدد المنتجات",
+        "status": "الحالة",
+        "actions": "العمليات"
+      },
+      "deliveryAreas": {
+        "createDeliveryArea": "إنشاء منطقة توصيل",
+        "city": "المدينة",
+        "areaName": "اسم المنطقة",
+        "deliveryFee": "رسوم التوصيل",
+        "minOrders": "الحد الأدنى للطلبات",
+        "actions": "العمليات"
+      },
+      "workTimePage": {
+        "title": "إدارة أوقات العمل",
+        "showing": "عرض",
+        "workTimes": "أوقات العمل",
+        "allStatuses": "جميع الحالات",
+        "moreFilters": "المزيد من الفلاتر",
+        "refresh": "تحديث",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "create": "إنشاء",
+        "noWorkTimesFound": "لا توجد أوقات عمل",
+        "searchPlaceholder": "ابحث عن أوقات العمل...",
+        "createWorkTime": "إنشاء وقت عمل",
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "days": {
+        "monday": "الاثنين",
+        "tuesday": "الثلاثاء",
+        "wednesday": "الأربعاء",
+        "thursday": "الخميس",
+        "friday": "الجمعة",
+        "saturday": "السبت",
+        "sunday": "الأحد"
+      },
+      "customersPage": {
+        "title": "إدارة العملاء",
+        "showing": "عرض",
+        "customers": "العملاء",
+        "allStatuses": "جميع الحالات",
+        "moreFilters": "المزيد من الفلاتر",
+        "refresh": "تحديث",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "create": "إنشاء",
+        "noCustomersFound": "لا توجد عملاء",
+        "searchPlaceholder": "ابحث عن العملاء...",
+        "createCustomer": "إنشاء عميل",
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "fullName": "الاسم الكامل",
+        "mobile": "رقم الجوال",
+        "reference": "رقم المرجع",
+        "email": "البريد الإلكتروني",
+        "bankDetails": "تفاصيل البنك"
+      },
+      refund: {
+        refundList: "قائمة المرتجعات",
+        makeRefund: "إنشاء مرتجع",
+        refundApproval: "موافقات المرتجعات",
+        bulkRefunds: "مرتجعات جماعية",
+        refundRef: "رقم المرجع",
+        invoiceRef: "رقم الفاتورة",
+        txnRef: "رقم المعاملة",
+        vendorPays: "ما يدفعه البائع",
+        customerReceives: "ما يستلمه العميل",
+        invoiceId: "معرف الفاتورة",
+        createdBy: "تم الإنشاء بواسطة",
+        uploadRefundFile: "رفع ملف المرتجعات",
+        uploadInstructions: "قم برفع ملف CSV يحتوي على تفاصيل المرتجعات",
+      },
+      common: {
+        search: "بحث...",
+        filter: "تصفية",
+        print: "طباعة",
+        copy: "نسخ",
+        export: "تصدير",
+        date: "التاريخ",
+        customer: "العميل",
+        amount: "المبلغ",
+        currency: "العملة",
+        actions: "الإجراءات",
+        status: "الحالة",
+        pending: "قيد الانتظار",
+        completed: "مكتمل",
+        approve: "موافقة",
+        reject: "رفض",
+        showing: "عرض",
+        of: "من",
+        allStatuses: "جميع الحالات",
+        selectFile: "اختر ملف"
+      },
+      customers: {
+        importCustomers: "استيراد العملاء",
+        uploadCustomerFile: "رفع ملف العملاء",
+        uploadInstructions: "قم برفع ملف CSV يحتوي على تفاصيل العملاء"
+      },
+      terminals: {
+        title: "إدارة الأجهزة",
+        terminalNo: "رقم الجهاز",
+        name: "اسم الجهاز",
+        rentType: "نوع الإيجار",
+        rentValue: "قيمة الإيجار",
+        startDate: "تاريخ البدء",
+        endDate: "تاريخ الانتهاء"
+      },
+      profile: {
+        updateProfile: "تحديث الملف",
+        businessDetails: "تفاصيل النشاط التجاري",
+        updateImage: "تحديث الصورة",
+        companyName: "اسم الشركة",
+        category: "الفئة",
+        defaultLanguage: "اللغة الافتراضية",
+        workPhone: "هاتف العمل",
+        workEmail: "بريد العمل",
+        websiteUrl: "رابط الموقع",
+        deliveryFees: "رسوم التوصيل",
+        invoiceExpiry: "انتهاء صلاحية الفاتورة",
+        hours: "ساعات",
+        days: "أيام",
+        minutes: "دقائق",
+        customSmsText: "نص SMS مخصص",
+        termsConditions: "الشروط والأحكام",
+        bankDetails: "تفاصيل الحساب البنكي",
+        bankAccountHolder: "اسم صاحب الحساب",
+        bankAccountNumber: "رقم الحساب",
+        iban: "رقم الآيبان",
+        bankName: "اسم البنك",
+        socialMedia: "حسابات التواصل الاجتماعي",
+        platform: "المنصة",
+        accountName: "اسم الحساب",
+        addAccount: "إضافة حساب جديد",
+        invoiceSettings: "إعدادات الفاتورة",
+        enableDetailedInvoice: "تمكين صفحة الفاتورة التفصيلية",
+        enableSimpleCheckout: "تمكين صفحة الدفع المبسطة",
+        showAllCurrencies: "عرض جميع العملات",
+        enableCardView: "تمكين عرض البطاقات",
+        displayVatDetails: "عرض تفاصيل الضريبة"
+      },
+      address: {
+        title: "إدارة العناوين",
+        addAddress: "إضافة عنوان",
+        type: "نوع العنوان",
+        city: "المدينة",
+        area: "اسم المنطقة",
+        street: "الشارع/الجادة",
+        details: "تفاصيل",
+        instructions: "تعليمات"
+      },
+      contact: {
+        title: "إدارة الاتصال",
+        contactDetails: "تفاصيل الاتصال",
+        sales: "اتصال المبيعات",
+        support: "اتصال الدعم",
+        complaintsAddresses: "الشكاوى والعناوين",
+        leaveMessage: "اترك لنا رسالة",
+        fullName: "الاسم الكامل",
+        mobile: "رقم الجوال",
+        email: "البريد الإلكتروني",
+        supportType: "نوع الدعم",
+        accountVerification: "تحقق من الحساب",
+        inquiryRequest: "استفسار/طلب خدمة",
+        financial: "مالي",
+        technical: "فني",
+        message: "رسالتك",
+        submit: "إرسال الرسالة",
+        bankDetails: "تفاصيل البنك",
+        accountHolder: "اسم صاحب الحساب",
+        accountNumber: "رقم الحساب",
+        iban: "رقم الآيبان",
+        bankName: "اسم البنك",
+        uploadImage: "رفع مستند بنكي"
+      },
+      "day": "اليوم",
+      "workTime": "وقت العمل",
+      "closeTime": "وقت الإغلاق",
+      "shift2OpenTime": "وقت بدء الوردية الثانية",
+      "shift2CloseTime": "وقت انتهاء الوردية الثانية",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "import": {
+        "import": "استيراد",
+        "category": "فئة المنتج",
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "attachFile": "إرفاق الملف",
+        "create": "إنشاء"
+      },
+      // Public pages translations
+      "hero": {
+        "title": "مدفوعات أذكى مع NadaPay",
+        "subtitle": "استقبل المدفوعات بكل سهولة عبر بوابات دفع آمنة وروابط دفع مباشرة. ندعم مدى، فيزا، ماستركارد، Apple Pay وSTC Pay.",
+        "cta1": "ابدأ الآن",
+        "cta2": "تواصل معنا"
+      },
+      "about": {
+        "title": "من نحن",
+        "content": "NadaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان."
+      },
+      "services": {
+        "title": "خدماتنا",
+        "items": [
+          {
+            "title": "بوابات الدفع الإلكتروني",
+            "description": "بوابات متكاملة وآمنة للمواقع الإلكترونية والتطبيقات."
+          },
+          {
+            "title": "روابط الدفع",
+            "description": "أنشئ وأرسل روابط الدفع خلال ثوانٍ – بدون الحاجة إلى موقع إلكتروني."
+          },
+          {
+            "title": "دعم جميع البطاقات",
+            "description": "قبول المدفوعات عبر مدى، فيزا، ماستركارد، Apple Pay وSTC Pay."
+          },
+          {
+            "title": "لوحة تحكم وتحليلات",
+            "description": "راقب العمليات المالية واطلع على تقارير مفصلة بسهولة."
+          }
+        ]
+      },
+      "why": {
+        "title": "لماذا NadaPay؟",
+        "items": [
+          "تكامل سهل",
+          "تتبع المعاملات في الوقت الفعلي",
+          "معتمد PCI-DSS",
+          "أسعار شفافة"
+        ]
+      },
+
+      // Auth translations
+      "login": {
+        "title": "تسجيل الدخول إلى NadaPay",
+        "subtitle": "أدخل بياناتك للوصول إلى حسابك",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "forgotPassword": "نسيت كلمة المرور؟",
+        "signIn": "تسجيل الدخول",
+        "or": "أو",
+        "noAccount": "ليس لديك حساب؟",
+        "createAccount": "إنشاء حساب"
+      },
+      "register": {
+        "title": "إنشاء حساب",
+        "subtitle": "ابدأ مع NadaPay في دقائق",
+        "fullName": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "company": "الشركة (اختياري)",
+        "createAccount": "إنشاء حساب",
+        "or": "أو",
+        "haveAccount": "لديك حساب بالفعل؟",
+        "signIn": "تسجيل الدخول",
+        "bankAccountName":"اسم الحساب البنكي",
+        "bankName":"اسم البنك",
+        "accountNumber":"رقم الحساب",
+        "iban":"رقم الإبان",
+        "ibanHelper":"يرجى إدخال رقم الـIBAN الخاص بك. المثال: GB29XABC10161234567801",
+    
+      },
+
+      // Dashboard translations
+      "dashboard": {
+        "welcome": "مرحباً",
+        "awaitingBalance": "الرصيد المنتظر",
+        "awaitingTransfer": "في انتظار التحويل",
+        "disputeAmount": "مبلغ النزاع",
+        "lastPayments": "آخر 5 مدفوعات",
+        "grossValue": "القيمة الإجمالية",
+        "netValue": "القيمة الصافية",
+        "successful": "ناجحة",
+        "failed": "فاشلة",
+        "totalRefund": "إجمالي المبالغ المستردة",
+        "totalDeposit": "إجمالي الودائع",
+        "totalPaid": "إجمالي المدفوع",
+        "grossNetChart": "القيمة الإجمالية مقابل الصافية",
+        "successFailedChart": "المعاملات الناجحة مقابل الفاشلة",
+        "financialSummary": "ملخص مالي",
+        "paymentMethods": "توزيع طرق الدفع",
+        "today": "اليوم",
+        "yesterday": "أمس",
+        "last7Days": "آخر 7 أيام",
+        "last30Days": "آخر 30 يوم",
+        "thisMonth": "هذا الشهر",
+        "lastMonth": "الشهر الماضي"
+      },
+      users: {
+        title: "إدارة المستخدمين",
+        addUser: "إضافة مستخدم",
+        fullName: "الاسم الكامل",
+        email: "البريد الإلكتروني",
+        phone: "رقم الهاتف",
+        country: "الدولة",
+        isEnabled: "مفعل"
+      },
+      suppliers: {
+        title: "إدارة الموردين",
+        addSupplier: "إضافة مورد",
+        code: "الكود",
+        name: "اسم المورد",
+        commission: "العمولة",
+        commissionPercent: "نسبة العمولة",
+        depositTerms: "شروط الإيداع",
+        approvalStatus: "حالة الموافقة",
+        depositsTitle: "إيداعات الموردين",
+        supplierName: "اسم المورد",
+        depositRef: "مرجع الإيداع",
+        totalValue: "القيمة الإجمالية",
+        depositDate: "تاريخ الإيداع",
+        bankDetails: "تفاصيل البنك",
+        approved: "موافق عليه",
+        pending: "قيد الانتظار"
+      },
+      // Table translations
+
+      "commissionCharger": "مشغل العمولات",
+      "bankDetails": "تفاصيل البنك",
+      "accountHolderName": "اسم صاحب الحساب",
+      "bankAccount": "رقم الحساب البنكي",
+      "iban": "رقم الآيبان",
+      "bankName": "اسم البنك",
+      "debitEnabled": "هل السحب مفعل؟",
+      "creditEnabled": "هل الإيداع مفعل؟",
+      "yes": "نعم",
+      "no": "لا",
+      "paymentMethod": "طريقة الدفع",
+      "method": "الطريقة",
+      "commissionFrom": "العمولة من",
+      "note": "ملاحظة",
+      "isActive": "نشط",
+      "bankTransfer": "تحويل بنكي",
+      "sender": "المرسل",
+      "bankNote": "تأكد من تطابق اسم الحساب تمامًا.",
+
+      "id": "رقم",
+      "date": "التاريخ",
+      "customer": "العميل",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "paymentMethod": "طريقة الدفع",
+      "dueDate": "تاريخ الاستحقاق",
+      "actions": "إجراءات",
+      "items": "المنتجات",
+      "type": "النوع",
+      "method": "الطريقة",
+      "reference": "المرجع",
+      "createInvoice": "إنشاء فاتورة",
+      "requestPickup": "طلب استلام",
+      "export": "تصدير",
+      "exportExcel": "تصدير إلى Excel",
+      "exportPDF": "تصدير إلى PDF",
+      "print": "طباعة",
+      "accountStatement": {
+        "title": "كشف الحساب",
+        "date": "التاريخ",
+        "reference": "رقم المرجع",
+        "description": "الوصف",
+        "debit": "مدين",
+        "credit": "دائن",
+        "balance": "الرصيد",
+        "search": "ابحث في الكشوفات...",
+        "copied": "تم النسخ إلى الحافظة"
+      },
+      "paymentLinks": {
+        "title": "روابط الدفع",
+        "customizeInvoice": "تخصيص نموذج الفاتورة",
+        "createPaymentLink": "إنشاء رابط دفع",
+        "search": "ابحث في روابط الدفع...",
+        "link": "رابط الدفع",
+        "createdAt": "تاريخ الإنشاء",
+        "amount": "مبلغ الدفع",
+        "currency": "العملة",
+        "isOpen": "مبلغ مفتوح",
+        "language": "اللغة",
+        "views": "عدد المشاهدات",
+        "copied": "تم النسخ إلى الحافظة"
+      },
+      "search": "بحث",
+      "all": "الكل",
+      "stockable": "قابل للتخزين",
+      "nonStockable": "غير قابل للتخزين",
+      "createOrder": "إنشاء طلب",
+      "nameEn": "الاسم (إنجليزي)",
+      "nameAr": "الاسم (عربي)",
+      "category": "الفئة",
+      "price": "السعر",
+      "quantity": "الكمية",
+
+      // Statuses
+      "statuses": {
+        "completed": "مكتمل",
+        "pending": "معلق",
+        "failed": "فاشل",
+        "refunded": "تم الاسترداد",
+        "cancelled": "ملغى",
+        "shipped": "تم الشحن",
+        "processing": "قيد المعالجة"
+      },
+
+      // Payment methods
+      "paymentMethods": {
+        "mada": "مدى",
+        "visa": "فيزا",
+        "mastercard": "ماستركارد",
+        "applepay": "آبل باي",
+        "stcpay": "STC Pay"
+      },
+
+      // Footer translations
+      "footer": {
+        "about": {
+          "title": "عن ناداباي",
+          "description": "حلول دفع رائدة للشركات الحديثة. معاملات آمنة وسريعة وموثوقة."
+        },
+        "links": {
+          "title": "روابط سريعة",
+          "home": "الرئيسية",
+          "about": "من نحن",
+          "services": "الخدمات",
+          "contact": "اتصل بنا"
+        },
+        "legal": {
+          "title": "قانوني",
+          "terms": "شروط الخدمة",
+          "privacy": "سياسة الخصوصية",
+          "cookies": "سياسة الكوكيز"
+        },
+        "social": {
+          "title": "تابعنا"
+        },
+        "newsletter": "اشترك في نشرتنا البريدية للحصول على التحديثات",
+        "copyright": "© {year} ناداباي. جميع الحقوق محفوظة."
+      }
+    }
+  }
 };
 
 i18n
-    .use(initReactI18next)
-    .init({
-        resources,
-        lng: 'en',
-        fallbackLng: 'en',
-        interpolation: {
-            escapeValue: false
-        }
-    });
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'en',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false
+    }
+  });
 
 export default i18n;

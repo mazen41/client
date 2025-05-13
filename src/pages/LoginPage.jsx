@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import {
@@ -9,7 +9,8 @@ import {
   Link,
   Divider,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  CircularProgress
 } from '@mui/material';
 import {
   Email as EmailIcon,
@@ -18,7 +19,7 @@ import {
   VisibilityOff
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const AnimatedCircle = styled(motion.div)({
   position: 'absolute',
@@ -29,26 +30,41 @@ const AnimatedCircle = styled(motion.div)({
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const isArabic = i18n.language === 'ar';
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      navigate('/dashboard');
+    } catch (err) {
+      setError(t('login.loginFailed'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Box
-      className={`min-h-screen flex items-center justify-center relative bg-gray-50 ${isArabic ? 'text-right' : 'text-left'}`}
-      sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        left: isArabic ? 'unset' : '90%', 
-        right: isArabic ? '90%' : 'unset',
-      }}
+    <Box 
+      className={`flex items-center justify-center relative bg-gray-50`}
+      dir={isArabic ? 'rtl' : 'ltr'}
+      style={{Height: "100vh"}}
+
     >
       {/* Background animated circles */}
       <AnimatedCircle
@@ -59,7 +75,7 @@ const LoginPage = () => {
           height: 300,
           backgroundColor: 'primary.main',
           top: -50,
-          left: -50,
+          [isArabic ? 'right' : 'left']: -50,
         }}
       />
       <AnimatedCircle
@@ -70,7 +86,7 @@ const LoginPage = () => {
           height: 200,
           backgroundColor: 'secondary.main',
           bottom: -30,
-          right: -30,
+          [isArabic ? 'left' : 'right']: -30,
         }}
       />
 
@@ -117,13 +133,20 @@ const LoginPage = () => {
           {t('login.subtitle')}
         </Typography>
 
+        {error && (
+          <Alert severity="error" sx={{ width: '100%', mb: 3 }}>
+            {error}
+          </Alert>
+        )}
+
         {/* Form */}
-        <Box component="form" sx={{ width: '100%' }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
           <TextField
             fullWidth
             margin="normal"
             label={t('login.email')}
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
             InputProps={{
@@ -150,7 +173,10 @@ const LoginPage = () => {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  <IconButton 
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
@@ -158,13 +184,34 @@ const LoginPage = () => {
             }}
           />
 
+          <Box sx={{ textAlign: 'right', mt: 1 }}>
+            <Link 
+              component={RouterLink} 
+              to="/forgot-password" 
+              sx={{ color: 'text.secondary', fontSize: 14 }}
+            >
+              {t('login.forgotPassword')}
+            </Link>
+          </Box>
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, py: 1.5, borderRadius: 2 }}
+            disabled={loading}
+            sx={{ 
+              mt: 3, 
+              mb: 2, 
+              py: 1.5, 
+              borderRadius: 2,
+              fontWeight: 600
+            }}
           >
-            {t('login.signIn')}
+            {loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              t('login.signIn')
+            )}
           </Button>
 
           <Divider sx={{ my: 2 }}>
@@ -173,9 +220,21 @@ const LoginPage = () => {
             </Typography>
           </Divider>
 
-          <Typography variant="body2" textAlign="center" color="text.secondary">
+          <Typography 
+            variant="body2" 
+            textAlign="center" 
+            color="text.secondary"
+            sx={{ mt: 2 }}
+          >
             {t('login.dontHaveAccount')}{' '}
-            <Link component={RouterLink} to="/register" sx={{ color: 'primary.main' }}>
+            <Link 
+              component={RouterLink} 
+              to="/register" 
+              sx={{ 
+                color: 'primary.main',
+                fontWeight: 600
+              }}
+            >
               {t('login.createAccount')}
             </Link>
           </Typography>
