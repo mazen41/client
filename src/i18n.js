@@ -10,6 +10,7 @@ const resources = {
         "about": "About",
         "services": "Services",
         "why": "Why Us",
+        "dashboard": "dashboard",
         "login": "Login",
         "register": "Register",
         "create": "Create",

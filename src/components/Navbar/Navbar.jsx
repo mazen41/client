@@ -96,7 +96,8 @@ const Navbar = () => {
     { key: 'home', path: '/' },
     { key: 'about', path: '/about' },
     { key: 'services', path: '/services' },
-    { key: 'why', path: '/why' }
+    { key: 'why', path: '/why' },
+    { key: 'dashboard', path: '/dashboard' },
   ];
 
   return (
