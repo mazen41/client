@@ -71,14 +71,14 @@ const resources = {
 
       // Public pages translations
       "hero": {
-        "title": "Smarter Payments with NadaPay",
+        "title": "Smarter Payments with MedaaPay",
         "subtitle": "Accept payments easily via secure gateways and payment links. Supports Mada, Visa, Mastercard, Apple Pay, and STC Pay.",
         "cta1": "Start Now",
         "cta2": "Contact Us"
       },
       "about": {
-        "title": "About NadaPay",
-        "content": "NadaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely."
+        "title": "About MedaaPay",
+        "content": "MedaaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely."
       },
       "services": {
         "title": "Our Services",
@@ -102,7 +102,7 @@ const resources = {
         ]
       },
       "why": {
-        "title": "Why Choose NadaPay?",
+        "title": "Why Choose MedaaPay?",
         "items": [
           "Easy Integration",
           "Real-Time Transaction Tracking",
@@ -113,7 +113,7 @@ const resources = {
 
       // Auth translations
       "login": {
-        "title": "Sign in to NadaPay",
+        "title": "Sign in to MedaaPay",
         "subtitle": "Enter your details to access your account",
         "email": "Email Address",
         "password": "Password",
@@ -125,7 +125,7 @@ const resources = {
       },
       "register": {
         "title": "Create Account",
-        "subtitle": "Get started with NadaPay in minutes",
+        "subtitle": "Get started with MedaaPay in minutes",
         "fullName": "Full Name",
         "email": "Email Address",
         "password": "Password",
@@ -575,7 +575,7 @@ const resources = {
       // Footer translations
       "footer": {
         "about": {
-          "title": "About NadaPay",
+          "title": "About MedaaPay",
           "description": "Leading payment solutions for modern businesses. Secure, fast and reliable transactions."
         },
         "links": {
@@ -595,7 +595,7 @@ const resources = {
           "title": "Follow Us"
         },
         "newsletter": "Subscribe to our newsletter for updates",
-        "copyright": "© {year} NadaPay. All rights reserved."
+        "copyright": "© {year} MedaaPay. All rights reserved."
       }
     }
   },
@@ -874,14 +874,14 @@ const resources = {
       },
       // Public pages translations
       "hero": {
-        "title": "مدفوعات أذكى مع NadaPay",
+        "title": "مدفوعات أذكى مع MedaaPay",
         "subtitle": "استقبل المدفوعات بكل سهولة عبر بوابات دفع آمنة وروابط دفع مباشرة. ندعم مدى، فيزا، ماستركارد، Apple Pay وSTC Pay.",
         "cta1": "ابدأ الآن",
         "cta2": "تواصل معنا"
       },
       "about": {
         "title": "من نحن",
-        "content": "NadaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان."
+        "content": "MedaaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان."
       },
       "services": {
         "title": "خدماتنا",
@@ -905,7 +905,7 @@ const resources = {
         ]
       },
       "why": {
-        "title": "لماذا NadaPay؟",
+        "title": "لماذا MedaaPay؟",
         "items": [
           "تكامل سهل",
           "تتبع المعاملات في الوقت الفعلي",
@@ -916,7 +916,7 @@ const resources = {
 
       // Auth translations
       "login": {
-        "title": "تسجيل الدخول إلى NadaPay",
+        "title": "تسجيل الدخول إلى MedaaPay",
         "subtitle": "أدخل بياناتك للوصول إلى حسابك",
         "email": "البريد الإلكتروني",
         "password": "كلمة المرور",
@@ -928,7 +928,7 @@ const resources = {
       },
       "register": {
         "title": "إنشاء حساب",
-        "subtitle": "ابدأ مع NadaPay في دقائق",
+        "subtitle": "ابدأ مع MedaaPay في دقائق",
         "fullName": "الاسم الكامل",
         "email": "البريد الإلكتروني",
         "password": "كلمة المرور",
