@@ -75,7 +75,7 @@ const Dashboard = () => {
             bgcolor: '#fafafa', 
             height: 'calc(100vh - 64px)', 
             overflowY: 'auto',
-            ml: { sm: '240px', xs: 0 }, // Adjust margin based on screen size
+            // ml: { sm: '240px', xs: 0 }, // Adjust margin based on screen size
             width: { sm: `calc(100% - 240px)`, xs: '100%' } // Adjust width based on sidebar state
           }}
         >
