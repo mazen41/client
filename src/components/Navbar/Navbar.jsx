@@ -138,7 +138,7 @@ const Navbar = () => {
                 alt="NadaPay Logo"
                 whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 0.6 }}
-                style={{ width: '120px', height: '40px', objectFit: 'contain' }}
+                style={{ width: '120px', objectFit: 'contain' }}
               />
             </RouterLink>
           </Box>
