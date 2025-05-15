@@ -28,11 +28,11 @@ const BatchInvoices = () => {
   return (
     <Box sx={{ padding: 3, direction: i18n.language === 'ar' ? 'rtl' : 'ltr' }}>
       <Typography variant="h5" gutterBottom>
-        {t('batchInvoices.title', 'Batch Invoices')}
+        {t('batchInvoices.title')}
       </Typography>
 
       <TextField
-        label={t('search', 'Search')}
+        label={t('batchInvoices.search')}
         variant="outlined"
         fullWidth
         sx={{ mb: 2 }}
@@ -44,12 +44,12 @@ const BatchInvoices = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t('name', 'Name')}</TableCell>
-              <TableCell>{t('createdAt', 'Created At')}</TableCell>
-              <TableCell>{t('expiryDate', 'Expiry Date')}</TableCell>
-              <TableCell>{t('invoiceStatus', 'Invoice Status')}</TableCell>
-              <TableCell>{t('numInvoices', 'Number of Invoices')}</TableCell>
-              <TableCell>{t('actions', 'Actions')}</TableCell>
+              <TableCell>{t('batchInvoices.name')}</TableCell>
+              <TableCell>{t('batchInvoices.createdAt')}</TableCell>
+              <TableCell>{t('batchInvoices.expiryDate')}</TableCell>
+              <TableCell>{t('batchInvoices.invoiceStatus')}</TableCell>
+              <TableCell>{t('batchInvoices.numInvoices')}</TableCell>
+              <TableCell>{t('batchInvoices.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

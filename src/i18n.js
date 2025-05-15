@@ -10,7 +10,7 @@ const resources = {
         "about": "About",
         "services": "Services",
         "why": "Why Us",
-        "dashboard": "dashboard",
+        // "dashboard": "dashboard",
         "login": "Login",
         "register": "Register",
         "create": "Create",
@@ -22,13 +22,23 @@ const resources = {
         "settings": "Settings",
         "logout": "Logout"
       },
-
+      "batchInvoices": {
+        "title": "Batch Invoices",
+        "search": "Search",
+        "name": "Name",
+        "createdAt": "Created At",
+        "expiryDate": "Expiry Date",
+        "invoiceStatus": "Invoice Status",
+        "numInvoices": "Number of Invoices",
+        "actions": "Actions"
+      },
       // Sidebar translations
       "sidebar": {
         "dashboard": "Dashboard",
         "overview": "Overview",
         "payment": "PAYMENT",
         "invoices": "Invoices",
+        "addresses": "Addresses",
         "orders": "Orders",
         "transactions": "Transactions",
         "deposits": "Deposits",
@@ -72,14 +82,14 @@ const resources = {
 
       // Public pages translations
       "hero": {
-        "title": "Smarter Payments with MedaaPay",
+        "title": "Your smarter payment partner.",
         "subtitle": "Accept payments easily via secure gateways and payment links. Supports Mada, Visa, Mastercard, Apple Pay, and STC Pay.",
         "cta1": "Start Now",
         "cta2": "Contact Us"
       },
       "about": {
-        "title": "About MedaaPay",
-        "content": "MedaaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely."
+        "title": "About MeedaPay",
+        "content": "MeedaPay is a modern electronic payment provider that enables businesses of all sizes to accept payments quickly and securely."
       },
       "services": {
         "title": "Our Services",
@@ -103,7 +113,7 @@ const resources = {
         ]
       },
       "why": {
-        "title": "Why Choose MedaaPay?",
+        "title": "Why Choose MeedaPay?",
         "items": [
           "Easy Integration",
           "Real-Time Transaction Tracking",
@@ -114,7 +124,7 @@ const resources = {
 
       // Auth translations
       "login": {
-        "title": "Sign in to MedaaPay",
+        "title": "Sign in to MeedaPay",
         "subtitle": "Enter your details to access your account",
         "email": "Email Address",
         "password": "Password",
@@ -125,24 +135,27 @@ const resources = {
         "createAccount": "Create account"
       },
       "register": {
-        "title": "Create Account",
-        "subtitle": "Get started with MedaaPay in minutes",
+        "title": "Create Your Account",
+        "subtitle": "Join us today to get started",
         "fullName": "Full Name",
         "email": "Email Address",
+        "phone": "Phone Number",
         "password": "Password",
-        "company": "Company (Optional)",
-        "createAccount": "Create Account",
-        "or": "OR",
+        "confirmPassword": "Confirm Password",
+        "country": "Country",
+        "companyName": "Company Name (Optional)",
+        "address": "Address (Optional)",
+        "profileType": "Profile Type",
+        "individual": "Individual",
+        "business": "Business",
+        "agreeToTerms": "I agree to the terms and conditions",
+        "completeRegistration": "Complete Registration",
         "haveAccount": "Already have an account?",
         "signIn": "Sign in",
-        "bankAccountName":"Bank Account Name",
-        "bankName":"Bank Name",
-        "accountNumber":"Account Number",
-        "iban":"Iban Number",
-        "ibanHelper":"Please enter your IBAN. Example: GB29XABC10161234567801",
-        "completeRegistration": "Sign in",
-        // "userType": 
-        
+        "or": "OR",
+        "fillAllRequiredFields": "Please fill all required fields",
+        "passwordsDontMatch": "Passwords don't match",
+        "registrationFailed": "Registration failed. Please try again."
       },
 
       // Dashboard translations
@@ -563,7 +576,10 @@ const resources = {
         "shipped": "Shipped",
         "processing": "Processing"
       },
-
+      "offersTitle" : "Offers",
+      "offers": { 
+        "getStarted" : "Get Started !"
+      },
       // Payment methods
       "paymentMethods": {
         "mada": "Mada",
@@ -576,7 +592,7 @@ const resources = {
       // Footer translations
       "footer": {
         "about": {
-          "title": "About MedaaPay",
+          "title": "About MeedaPay",
           "description": "Leading payment solutions for modern businesses. Secure, fast and reliable transactions."
         },
         "links": {
@@ -596,7 +612,7 @@ const resources = {
           "title": "Follow Us"
         },
         "newsletter": "Subscribe to our newsletter for updates",
-        "copyright": "© {year} MedaaPay. All rights reserved."
+        "copyright": "© {year} MeedaPay. All rights reserved."
       }
     }
   },
@@ -619,7 +635,17 @@ const resources = {
         "settings": "الإعدادات",
         "logout": "تسجيل الخروج"
       },
-
+ 
+      "batchInvoices": {
+        "title": "الفواتير المجمعة",
+        "search": "بحث",
+        "name": "الاسم",
+        "createdAt": "تاريخ الإنشاء",
+        "expiryDate": "تاريخ الانتهاء",
+        "invoiceStatus": "حالة الفاتورة",
+        "numInvoices": "عدد الفواتير",
+        "actions": "الإجراءات"
+      },
       // Sidebar translations
       "sidebar": {
         "dashboard": "لوحة التحكم",
@@ -874,15 +900,20 @@ const resources = {
         "create": "إنشاء"
       },
       // Public pages translations
+      // "offers":{
+      // "title" : "العروض"
+      // },
+      "offersTitle" : "العروض",
       "hero": {
-        "title": "مدفوعات أذكى مع MedaaPay",
+        "title": "الشريك الذكي والدفع الأمثل",
         "subtitle": "استقبل المدفوعات بكل سهولة عبر بوابات دفع آمنة وروابط دفع مباشرة. ندعم مدى، فيزا، ماستركارد، Apple Pay وSTC Pay.",
         "cta1": "ابدأ الآن",
         "cta2": "تواصل معنا"
       },
       "about": {
         "title": "من نحن",
-        "content": "MedaaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان."
+        "content": "MeedaPay هي شركة حديثة في مجال حلول الدفع الإلكتروني، تمكّن الشركات من جميع الأحجام من قبول المدفوعات بسرعة وأمان."
+
       },
       "services": {
         "title": "خدماتنا",
@@ -906,7 +937,7 @@ const resources = {
         ]
       },
       "why": {
-        "title": "لماذا MedaaPay؟",
+        "title": "لماذا MeedaPay؟",
         "items": [
           "تكامل سهل",
           "تتبع المعاملات في الوقت الفعلي",
@@ -917,7 +948,7 @@ const resources = {
 
       // Auth translations
       "login": {
-        "title": "تسجيل الدخول إلى MedaaPay",
+        "title": "تسجيل الدخول إلى MeedaPay",
         "subtitle": "أدخل بياناتك للوصول إلى حسابك",
         "email": "البريد الإلكتروني",
         "password": "كلمة المرور",
@@ -928,22 +959,27 @@ const resources = {
         "createAccount": "إنشاء حساب"
       },
       "register": {
-        "title": "إنشاء حساب",
-        "subtitle": "ابدأ مع MedaaPay في دقائق",
+        "title": "إنشاء حسابك",
+        "subtitle": "انضم إلينا اليوم للبدء",
         "fullName": "الاسم الكامل",
         "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
         "password": "كلمة المرور",
-        "company": "الشركة (اختياري)",
-        "createAccount": "إنشاء حساب",
-        "or": "أو",
-        "haveAccount": "لديك حساب بالفعل؟",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "country": "البلد",
+        "companyName": "اسم الشركة (اختياري)",
+        "address": "العنوان (اختياري)",
+        "profileType": "نوع الملف الشخصي",
+        "individual": "فرد",
+        "business": "عمل تجاري",
+        "agreeToTerms": "أوافق على الشروط والأحكام",
+        "completeRegistration": "إكمال التسجيل",
+        "haveAccount": "هل لديك حساب بالفعل؟",
         "signIn": "تسجيل الدخول",
-        "bankAccountName":"اسم الحساب البنكي",
-        "bankName":"اسم البنك",
-        "accountNumber":"رقم الحساب",
-        "iban":"رقم الإبان",
-        "ibanHelper":"يرجى إدخال رقم الـIBAN الخاص بك. المثال: GB29XABC10161234567801",
-    
+        "or": "أو",
+        "fillAllRequiredFields": "يرجى ملء جميع الحقول المطلوبة",
+        "passwordsDontMatch": "كلمات المرور غير متطابقة",
+        "registrationFailed": "فشل التسجيل. يرجى المحاولة مرة أخرى."
       },
 
       // Dashboard translations

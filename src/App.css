@@ -75,3 +75,9 @@ html[dir="rtl"] .menu-list a:before {
   right: 0.75em;
   left: unset;
 } 
+body {
+  direction: ltr; /* Default direction */
+}
+[dir="rtl"] body {
+  direction: rtl;
+}

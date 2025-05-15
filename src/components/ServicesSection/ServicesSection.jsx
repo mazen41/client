@@ -20,6 +20,8 @@ const ServicesSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const titleWords = t('services.title').split(' ');
+
   const services = [
     {
       icon: <CreditCardIcon fontSize="large" color="primary" />,
@@ -60,23 +62,37 @@ const ServicesSection = () => {
       }}
     >
       <Box textAlign="center" mb={6}>
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+        <Typography
+          variant={isMobile ? 'h4' : 'h3'}
+          component="h2"
+          sx={{
+            fontWeight: 'bold',
+            mb: 2,
+            display: 'inline-flex',
+            justifyContent: 'center',
+            background: 'linear-gradient(90deg, #0062E6, #33AEFF)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            gap: 1,
+          }}
         >
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            sx={{
-              background: 'linear-gradient(90deg, #0062E6, #33AEFF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            {t('services.title')}
-          </Typography>
-        </motion.div>
+          {titleWords.map((word, index) => (
+            <motion.span
+              key={index}
+              style={{ display: 'inline-block' }}
+              initial={{ y: -30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2,
+                ease: 'easeOut',
+              }}
+            >
+              {word}
+            </motion.span>
+          ))}
+        </Typography>
       </Box>
 
       <Grid container spacing={4} justifyContent="center">

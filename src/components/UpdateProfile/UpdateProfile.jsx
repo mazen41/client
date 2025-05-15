@@ -1,17 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, Typography, TextField, Button, Paper, Divider, 
-  FormControl, InputLabel, Select, MenuItem, Switch, IconButton
+  FormControl, InputLabel, Select, MenuItem, Switch, IconButton,
+  Snackbar, Alert
 } from '@mui/material';
 import { Save, Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const UpdateProfile = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(0);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    company_name: '',
+    country: '',
+    password: '',
+    password_confirmation: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
   const [socialAccounts, setSocialAccounts] = useState([
     { platform: 'facebook', accountName: '' },
   ]);
+
+  useEffect(() => {
+    // Load user data from localStorage or API
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData) {
+      setFormData({
+        name: userData.name || '',
+        email: userData.email || '',
+        phone: userData.phone || '',
+        address: userData.address || '',
+        company_name: userData.company_name || '',
+        country: userData.country || '',
+        password: '',
+        password_confirmation: ''
+      });
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post('/api/update-profile', formData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      // Update localStorage with new user data
+      const updatedUser = { ...JSON.parse(localStorage.getItem('user')), ...response.data.user };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      
+      setSuccess(true);
+      setFormData(prev => ({
+        ...prev,
+        password: '',
+        password_confirmation: ''
+      }));
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const addSocialAccount = () => {
     setSocialAccounts([...socialAccounts, { platform: 'facebook', accountName: '' }]);
@@ -29,90 +98,106 @@ const UpdateProfile = () => {
         {t('profile.updateProfile')}
       </Typography>
 
-      <Paper sx={{ p: 3, mb: 3, borderRadius: '12px' }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('profile.businessDetails')}</Typography>
+      {error && (
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError(null)}>
+          <Alert severity="error" onClose={() => setError(null)}>
+            {error}
+          </Alert>
+        </Snackbar>
+      )}
+
+      {success && (
+        <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
+          <Alert severity="success" onClose={() => setSuccess(false)}>
+            Profile updated successfully!
+          </Alert>
+        </Snackbar>
+      )}
+
+      <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3, mb: 3, borderRadius: '12px' }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>Personal Information</Typography>
         <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
-            <Button variant="contained" component="label" sx={{ width: 'fit-content' }}>
-              {t('profile.updateImage')}
-              <input type="file" hidden />
-            </Button>
-            <TextField label={t('profile.companyName')} fullWidth />
-            <FormControl fullWidth>
-              <InputLabel>{t('profile.category')}</InputLabel>
-              <Select label={t('profile.category')}>
-                <MenuItem value="retail">Retail</MenuItem>
-                <MenuItem value="wholesale">Wholesale</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel>{t('profile.defaultLanguage')}</InputLabel>
-              <Select label={t('profile.defaultLanguage')}>
-                <MenuItem value="en">English</MenuItem>
-                <MenuItem value="ar">Arabic</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField label={t('profile.workPhone')} fullWidth />
-            <TextField label={t('profile.workEmail')} fullWidth />
-            <TextField label={t('profile.websiteUrl')} fullWidth />
-            <TextField label={t('profile.deliveryFees')} fullWidth type="number" />
+            <TextField 
+              label="Full Name" 
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              fullWidth 
+              required
+            />
+            <TextField 
+              label="Email" 
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              fullWidth 
+              required
+            />
+            <TextField 
+              label="Phone" 
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              fullWidth 
+              required
+            />
+            <TextField 
+              label="Address" 
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              fullWidth 
+              multiline
+              rows={2}
+            />
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
-            <Typography variant="subtitle1">{t('profile.invoiceExpiry')}</Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <TextField label={t('profile.hours')} type="number" fullWidth />
-              <TextField label={t('profile.days')} type="number" fullWidth />
-              <TextField label={t('profile.minutes')} type="number" fullWidth />
-            </Box>
             <TextField 
-              label={t('profile.customSmsText')} 
-              multiline 
-              rows={4} 
+              label="Company Name" 
+              name="company_name"
+              value={formData.company_name}
+              onChange={handleChange}
               fullWidth 
             />
             <TextField 
-              label={t('profile.termsConditions')} 
-              multiline 
-              rows={4} 
+              label="Country" 
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              fullWidth 
+            />
+            <TextField 
+              label="New Password" 
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              fullWidth 
+            />
+            <TextField 
+              label="Confirm Password" 
+              name="password_confirmation"
+              type="password"
+              value={formData.password_confirmation}
+              onChange={handleChange}
               fullWidth 
             />
           </Box>
         </Box>
-        <Button variant="contained" startIcon={<Save />} sx={{ mt: 3 }}>
-          {t('common.save')}
+        <Button 
+          type="submit"
+          variant="contained" 
+          startIcon={<Save />} 
+          sx={{ mt: 3 }}
+          disabled={loading}
+        >
+          {loading ? 'Updating...' : 'Save Changes'}
         </Button>
       </Paper>
 
-      <Paper sx={{ p: 3, mb: 3, borderRadius: '12px' }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('profile.bankDetails')}</Typography>
-        <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
-          <Box sx={{ flex: 1 }}>
-            <TextField 
-              label={t('profile.bankAccountHolder')} 
-              fullWidth 
-              sx={{ mb: 2 }} 
-            />
-            <TextField 
-              label={t('profile.bankAccountNumber')} 
-              fullWidth 
-              sx={{ mb: 2 }} 
-            />
-            <TextField 
-              label={t('profile.iban')} 
-              fullWidth 
-              sx={{ mb: 2 }} 
-            />
-            <TextField 
-              label={t('profile.bankName')} 
-              fullWidth 
-            />
-          </Box>
-        </Box>
-        <Button variant="contained" startIcon={<Save />} sx={{ mt: 3 }}>
-          {t('common.save')}
-        </Button>
-      </Paper>
-
+      {/* Rest of your existing social media and other sections */}
       <Paper sx={{ p: 3, mb: 3, borderRadius: '12px' }}>
         <Typography variant="h6" sx={{ mb: 2 }}>{t('profile.socialMedia')}</Typography>
         {socialAccounts.map((account, index) => (
@@ -158,38 +243,6 @@ const UpdateProfile = () => {
           sx={{ mt: 1 }}
         >
           {t('profile.addAccount')}
-        </Button>
-        <Button variant="contained" startIcon={<Save />} sx={{ mt: 3, ml: 2 }}>
-          {t('common.save')}
-        </Button>
-      </Paper>
-
-      <Paper sx={{ p: 3, borderRadius: '12px' }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('profile.invoiceSettings')}</Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('profile.enableDetailedInvoice')}</Typography>
-            <Switch color="primary" defaultChecked />
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('profile.enableSimpleCheckout')}</Typography>
-            <Switch color="primary" />
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('profile.showAllCurrencies')}</Typography>
-            <Switch color="primary" defaultChecked />
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('profile.enableCardView')}</Typography>
-            <Switch color="primary" />
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('profile.displayVatDetails')}</Typography>
-            <Switch color="primary" defaultChecked />
-          </Box>
-        </Box>
-        <Button variant="contained" startIcon={<Save />} sx={{ mt: 3 }}>
-          {t('common.save')}
         </Button>
       </Paper>
     </Box>

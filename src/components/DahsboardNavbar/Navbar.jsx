@@ -21,13 +21,13 @@ import {
   AccountCircle
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const NavbarContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   boxShadow: theme.shadows[3],
   borderRadius: theme.shape.borderRadius,
-//   margin: theme.spacing(2),
   padding: theme.spacing(2),
   height: '65px',
   width: '100%',
@@ -37,13 +37,14 @@ const NavbarContainer = styled(Box)(({ theme }) => ({
   zIndex: "1400",
 }));
 
-const Navbar = () => {
+const Navbar = ({ children }) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const [createAnchorEl, setCreateAnchorEl] = useState(null);
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
   const [userAnchorEl, setUserAnchorEl] = useState(null);
- const navigate = useNavigate()
+  const navigate = useNavigate();
+  
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
@@ -60,98 +61,133 @@ const Navbar = () => {
     setUserAnchorEl(null);
   };
 
+  const handleLogout = async () => {
+    try {
+      // Call logout API
+      await axios.post('http://127.0.0.1:8000/api/logout', null, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      
+      // Clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Redirect to login page
+      navigate('/login');
+      
+      handleMenuClose();
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Even if API fails, still clear local storage and redirect
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      navigate('/login');
+    }
+  };
+
   return (
-    <NavbarContainer>
-      {/* Logo */}
-      <Box>
-        <img src="/new-logo.png" alt="Logo" width={115} onClick={() => navigate('/dashboard')} style={{cursor: "pointer"}}/>
-      </Box>
+    <>
+      <NavbarContainer>
+        {/* Logo */}
+        <Box>
+          <img 
+            src="/new-logo.png" 
+            alt="Logo" 
+            width={115} 
+            onClick={() => navigate('/dashboard')} 
+            style={{cursor: "pointer"}}
+          />
+        </Box>
 
-      {/* Right Side Actions */}
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {/* Create Menu */}
-        <IconButton onClick={handleCreateMenuOpen} sx={{ mx: 1 }}>
-          <Add />
-          <Typography variant="body2" sx={{ ml: 1 }}>
-            {t('navbar.create')}
-          </Typography>
-        </IconButton>
-        <Menu
-          anchorEl={createAnchorEl}
-          open={Boolean(createAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>{t('navbar.createInvoice')}</MenuItem>
-          <MenuItem onClick={handleMenuClose}>{t('navbar.quickInvoice')}</MenuItem>
-          <MenuItem onClick={handleMenuClose}>{t('navbar.batchInvoice')}</MenuItem>
-          <MenuItem onClick={handleMenuClose}>{t('navbar.paymentLink')}</MenuItem>
-        </Menu>
-
-        {/* Language Menu */}
-        <IconButton onClick={handleLanguageMenuOpen} sx={{ mx: 1 }}>
-          <Language />
-          <Typography variant="body2" sx={{ ml: 1 }}>
-            {i18n.language === 'en' ? 'English' : 'العربية'}
-          </Typography>
-        </IconButton>
-        <Menu
-          anchorEl={languageAnchorEl}
-          open={Boolean(languageAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem
-            onClick={() => {
-              i18n.changeLanguage('en');
-              document.documentElement.dir = 'ltr';
-              handleMenuClose();
-            }}
-            selected={i18n.language === 'en'}
+        {/* Right Side Actions */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {/* Create Menu */}
+          <IconButton onClick={handleCreateMenuOpen} sx={{ mx: 1 }}>
+            <Add />
+            <Typography variant="body2" sx={{ ml: 1 }}>
+              {t('navbar.create')}
+            </Typography>
+          </IconButton>
+          <Menu
+            anchorEl={createAnchorEl}
+            open={Boolean(createAnchorEl)}
+            onClose={handleMenuClose}
           >
-            English
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              i18n.changeLanguage('ar');
-              document.documentElement.dir = 'rtl';
-              handleMenuClose();
-            }}
-            selected={i18n.language === 'ar'}
-          >
-            العربية
-          </MenuItem>
-        </Menu>
+            <MenuItem onClick={handleMenuClose}>{t('navbar.createInvoice')}</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('navbar.quickInvoice')}</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('navbar.batchInvoice')}</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('navbar.paymentLink')}</MenuItem>
+          </Menu>
 
-        {/* User Menu */}
-        <IconButton onClick={handleUserMenuOpen} sx={{ ml: 1 }}>
-          <Avatar src="/user-icon.png" alt="User" />
-        </IconButton>
-        <Menu
-          anchorEl={userAnchorEl}
-          open={Boolean(userAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>
-            <ListItemIcon>
-              <AccountCircle fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('navbar.profile')}</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('navbar.settings')}</ListItemText>
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={handleMenuClose}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('navbar.logout')}</ListItemText>
-          </MenuItem>
-        </Menu>
-      </Box>
-    </NavbarContainer>
+          {/* Language Menu */}
+          <IconButton onClick={handleLanguageMenuOpen} sx={{ mx: 1 }}>
+            <Language />
+            <Typography variant="body2" sx={{ ml: 1 }}>
+              {i18n.language === 'en' ? 'English' : 'العربية'}
+            </Typography>
+          </IconButton>
+          <Menu
+            anchorEl={languageAnchorEl}
+            open={Boolean(languageAnchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem
+              onClick={() => {
+                i18n.changeLanguage('en');
+                document.documentElement.dir = 'ltr';
+                handleMenuClose();
+              }}
+              selected={i18n.language === 'en'}
+            >
+              English
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                i18n.changeLanguage('ar');
+                document.documentElement.dir = 'rtl';
+                handleMenuClose();
+              }}
+              selected={i18n.language === 'ar'}
+            >
+              العربية
+            </MenuItem>
+          </Menu>
+
+          {/* User Menu */}
+          <IconButton onClick={handleUserMenuOpen} sx={{ ml: 1 }}>
+            <Avatar src="/user-icon.png" alt="User" />
+          </IconButton>
+          <Menu
+            anchorEl={userAnchorEl}
+            open={Boolean(userAnchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleMenuClose}>
+              <ListItemIcon>
+                <AccountCircle fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>{t('navbar.profile')}</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>{t('navbar.settings')}</ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>{t('navbar.logout')}</ListItemText>
+            </MenuItem>
+          </Menu>
+        </Box>
+      </NavbarContainer>
+      {children}
+    </>
   );
 };
 

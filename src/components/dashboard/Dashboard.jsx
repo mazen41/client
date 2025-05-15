@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
@@ -32,16 +32,28 @@ import SuppliersList from '../../pages/SuppliersList';
 import SuppliersDeposits from '../../pages/SuppliersDeposits';
 import AddressManagement from '../../pages/Addresses';
 import ContactManagement from '../../pages/Contact';
-
+import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const token = localStorage.getItem('token') || null
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if token doesn't exist
+    if (!token) {
+      // Redirect to login page
+      navigate('/login'); // Adjust the path to your actual login route
+    }
+  }, [token, navigate]);
+  
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', overflow: 'scroll' }}>
@@ -76,7 +88,8 @@ const Dashboard = () => {
             height: 'calc(100vh - 64px)', 
             overflowY: 'auto',
             // ml: { sm: '240px', xs: 0 }, // Adjust margin based on screen size
-            width: { sm: `calc(100% - 240px)`, xs: '100%' } // Adjust width based on sidebar state
+            width: { sm: `calc(100% - 240px)`, xs: '100%' }, 
+            // marginRight: isArabic ? "-10%" : "0%"
           }}
         >
           <Routes>

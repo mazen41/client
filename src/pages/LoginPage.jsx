@@ -10,7 +10,8 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  CircularProgress
+  CircularProgress,
+  Alert
 } from '@mui/material';
 import {
   Email as EmailIcon,
@@ -20,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AnimatedCircle = styled(motion.div)({
   position: 'absolute',
@@ -47,13 +49,45 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!formData.email || !formData.password) {
+      setError(t('login.requiredFields'));
+      return;
+    }
+
     try {
       setLoading(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      setError(null);
+      
+      // Call login API
+      const response = await axios.post('http://127.0.0.1:8000/api/login', {
+        email: formData.email,
+        password: formData.password
+      });
+
+      // Store token and user data in localStorage
+      localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      
+      // Redirect to dashboard
       navigate('/dashboard');
+      
     } catch (err) {
-      setError(t('login.loginFailed'));
+      // Handle different error responses
+      if (err.response) {
+        if (err.response.status === 401) {
+          setError(t('login.invalidCredentials'));
+        } else if (err.response.status === 422) {
+          setError(t('login.validationError'));
+        } else {
+          setError(t('login.serverError'));
+        }
+      } else if (err.request) {
+        setError(t('login.networkError'));
+      } else {
+        setError(t('login.generalError'));
+      }
     } finally {
       setLoading(false);
     }
@@ -63,8 +97,7 @@ const LoginPage = () => {
     <Box 
       className={`flex items-center justify-center relative bg-gray-50`}
       dir={isArabic ? 'rtl' : 'ltr'}
-      style={{Height: "100vh"}}
-
+      style={{ minHeight: "100vh" }}
     >
       {/* Background animated circles */}
       <AnimatedCircle
@@ -112,7 +145,7 @@ const LoginPage = () => {
         {/* Logo placeholder */}
         <img
           style={{ width: '100px' }}
-          src='./logo2.png'
+          src='./new-logo.png'
           alt="Logo"
         />
 
@@ -149,6 +182,7 @@ const LoginPage = () => {
             type="email"
             value={formData.email}
             onChange={handleChange}
+            required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -165,6 +199,7 @@ const LoginPage = () => {
             type={showPassword ? 'text' : 'password'}
             value={formData.password}
             onChange={handleChange}
+            required
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -184,7 +219,7 @@ const LoginPage = () => {
             }}
           />
 
-          <Box sx={{ textAlign: 'right', mt: 1 }}>
+          <Box sx={{ textAlign: isArabic ? 'left' : 'right', mt: 1 }}>
             <Link 
               component={RouterLink} 
               to="/forgot-password" 

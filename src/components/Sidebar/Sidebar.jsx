@@ -16,7 +16,6 @@ import {
   IconButton,
   Toolbar,
   useMediaQuery,
-  Tooltip,
   AppBar,
   Box,
   CssBaseline
@@ -44,7 +43,8 @@ import {
   IntegrationInstructions as IntegrationInstructionsIcon,
   ContactSupport as ContactSupportIcon,
   Menu as MenuIcon,
-  ChevronLeft as ChevronLeftIcon
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -140,14 +140,21 @@ const DropdownMenu = ({ icon, title, items, collapsed, forceOpen = false }) => {
 };
 
 const Sidebar = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
+  // Determine if the current language is RTL
+  const isRTL = i18n.dir() === 'rtl';
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleCollapseToggle = () => {
+    setCollapsed(!collapsed);
   };
 
   useEffect(() => {
@@ -171,13 +178,13 @@ const Sidebar = () => {
     <>
       <Toolbar sx={{ justifyContent: 'flex-end', minHeight: '64px !important' }}>
         {!collapsed && !isMobile && (
-          <IconButton onClick={() => setCollapsed(!collapsed)}>
-            <ChevronLeftIcon />
+          <IconButton onClick={handleCollapseToggle}>
+            {isRTL ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         )}
         {isMobile && (
           <IconButton onClick={handleDrawerToggle}>
-            <ChevronLeftIcon />
+            {isRTL ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         )}
       </Toolbar>
@@ -293,7 +300,7 @@ const Sidebar = () => {
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${collapsed ? collapsedWidth : drawerWidth}px)` },
-          ml: { sm: `${collapsed ? collapsedWidth : drawerWidth}px` },
+          [isRTL ? 'right' : 'left']: { sm: `${collapsed ? collapsedWidth : drawerWidth}px` },
           boxShadow: 'none',
           backgroundColor: 'transparent',
           color: '#000',
@@ -303,10 +310,10 @@ const Sidebar = () => {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            edge="start"
+            edge={isRTL ? 'end' : 'start'}
             onClick={handleDrawerToggle}
-            sx={{ 
-              mr: 2, 
+            sx={{
+              [isRTL ? 'ml' : 'mr']: 2,
               display: { sm: 'none' },
               marginTop: '18%',
               background: 'none',
@@ -325,7 +332,11 @@ const Sidebar = () => {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: collapsed ? collapsedWidth : drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: collapsed ? collapsedWidth : drawerWidth },
+          flexShrink: { sm: 0 },
+          [isRTL ? 'right' : 'left']: 0
+        }}
       >
         <Drawer
           variant="temporary"
@@ -336,10 +347,11 @@ const Sidebar = () => {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
               boxShadow: 'none',
+              [isRTL ? 'right' : 'left']: 0
             },
           }}
         >
@@ -349,10 +361,13 @@ const Sidebar = () => {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: collapsed ? collapsedWidth : drawerWidth,
               boxShadow: 'none',
+              [isRTL ? 'right' : 'left']: 0,
+              borderRight: isRTL ? 'none' : '1px solid rgba(0, 0, 0, 0.12)',
+              borderLeft: isRTL ? '1px solid rgba(0, 0, 0, 0.12)' : 'none'
             },
           }}
           open

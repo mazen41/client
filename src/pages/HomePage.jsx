@@ -13,7 +13,18 @@ import ServicesSection from '../components/ServicesSection/ServicesSection';
 import WhyChooseUs from '../components/WhyChooseUs/WhyChooseUs';
 import Footer from '../components/Footer/Footer';
 import OffersSection from '../components/Offers/OffersSection';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 const HomePage = () => {
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate()
+  useEffect(() => {
+    // Check if token doesn't exist
+    if (token) {
+      // Redirect to login page
+      navigate('/dahsboard'); // Adjust the path to your actual login route
+    }
+  }, [token, navigate]);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -21,7 +32,7 @@ const HomePage = () => {
       exit={{ opacity: 0 }}
     >
       <Navbar />
-      
+
       <Box component="main" sx={{
         // maxWidth: '1280px',
         width: '98.80vw',
@@ -35,13 +46,13 @@ const HomePage = () => {
         <Box sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
           <ServicesSection />
         </Box>
-        <Box sx={{ py: { xs: 8, md: 12 }}}>
+        <Box sx={{ py: { xs: 8, md: 12 } }}>
           <OffersSection />
         </Box>
         <Box sx={{ py: { xs: 8, md: 12 } }}>
           <WhyChooseUs />
         </Box>
-              <Box sx={{ py: { xs: 8, md: 12 } }}>
+        <Box sx={{ py: { xs: 8, md: 12 } }}>
           <Footer />
         </Box>
       </Box>

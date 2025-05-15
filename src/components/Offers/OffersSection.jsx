@@ -14,14 +14,64 @@ import {
   ListItemText
 } from '@mui/material';
 import { CheckCircle } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 
 const MotionBox = motion(Box);
+const MotionTypography = motion(Typography);
+
+// تأثير glitch بسيط
+const glitchVariants = {
+  animate: {
+    textShadow: [
+      '2px 0 red, -2px 0 cyan',
+      '-2px 0 red, 2px 0 cyan',
+      '2px 2px red, -2px -2px cyan',
+      '-2px -2px red, 2px 2px cyan',
+      '2px 0 red, -2px 0 cyan',
+      'none'
+    ],
+    transition: {
+      repeat: Infinity,
+      repeatType: 'loop',
+      duration: 1,
+      ease: 'easeInOut',
+    }
+  }
+};
+
+// تأثير الطيران مع دوران واهتزاز
+const cardVariants = {
+  offscreen: {
+    y: 300,
+    rotate: 45,
+    opacity: 0,
+  },
+  onscreen: (i) => ({
+    y: 0,
+    rotate: 0,
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      bounce: 0.4,
+      duration: 1,
+      delay: i * 0.3,
+    }
+  }),
+  hover: {
+    scale: 1.1,
+    rotate: [0, 5, -5, 5, 0],
+    transition: {
+      duration: 0.6,
+      repeat: Infinity,
+      repeatType: 'mirror',
+      ease: 'easeInOut',
+    }
+  }
+};
 
 const OffersSection = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-  const navigate = useNavigate();
 
   const offers = [
     {
@@ -81,12 +131,16 @@ const OffersSection = () => {
       }}
     >
       <Box textAlign="center" mb={6}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          {t('offers.title')}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          {t('offers.subtitle')}
-        </Typography>
+        <MotionTypography
+          variant="h4"
+          fontWeight="bold"
+          gutterBottom
+          variants={glitchVariants}
+          animate="animate"
+          sx={{ userSelect: 'none' }}
+        >
+          {t('offersTitle')}
+        </MotionTypography>
       </Box>
 
       <Grid container spacing={4} justifyContent="center">
@@ -95,16 +149,19 @@ const OffersSection = () => {
             <MotionBox
               component={Paper}
               elevation={offer.featured ? 8 : 3}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
+              custom={index}
+              initial="offscreen"
+              whileInView="onscreen"
+              whileHover="hover"
+              viewport={{ once: true, amount: 0.8 }}
+              variants={cardVariants}
               sx={{
                 p: 4,
                 borderRadius: 3,
                 position: 'relative',
                 bgcolor: offer.featured ? 'background.paper' : 'white',
                 height: '100%',
+                cursor: 'pointer',
               }}
             >
               {offer.featured && (
