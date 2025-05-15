@@ -46,13 +46,13 @@ const Dashboard = () => {
   };
 const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if token doesn't exist
-    if (!token) {
-      // Redirect to login page
-      navigate('/login'); // Adjust the path to your actual login route
-    }
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   // Check if token doesn't exist
+  //   if (!token) {
+  //     // Redirect to login page
+  //     navigate('/login'); // Adjust the path to your actual login route
+  //   }
+  // }, [token, navigate]);
   
 
   return (

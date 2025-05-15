@@ -10,7 +10,6 @@ const resources = {
         "about": "About",
         "services": "Services",
         "why": "Why Us",
-        // "dashboard": "dashboard",
         "login": "Login",
         "register": "Register",
         "create": "Create",
@@ -20,7 +19,9 @@ const resources = {
         "paymentLink": "Payment Link",
         "profile": "Profile",
         "settings": "Settings",
-        "logout": "Logout"
+        "logout": "Logout",
+        "dashboard": "dashboard",
+
       },
       "batchInvoices": {
         "title": "Batch Invoices",

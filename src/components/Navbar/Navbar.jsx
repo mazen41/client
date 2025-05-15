@@ -8,8 +8,6 @@ import {
   Box,
   Menu,
   MenuItem,
-  Fade,
-  Slide,
   useScrollTrigger,
   styled
 } from '@mui/material';
@@ -34,8 +32,12 @@ const StyledAppBar = styled(AppBar)(({ theme, scrolled }) => ({
   zIndex: theme.zIndex.appBar + 1,
 }));
 
-const NavButton = styled(motion(Button))(({ theme, active }) => ({
-  color: active ? theme.palette.primary.main : theme.palette.text.primary,
+const NavButton = styled(motion(Button))(({ theme, active, scrolled }) => ({
+  color: scrolled
+    ? active
+      ? theme.palette.primary.main
+      : theme.palette.text.primary
+    : '#fff',
   fontWeight: active ? 700 : 500,
   position: 'relative',
   textTransform: 'none',
@@ -69,24 +71,25 @@ const LanguageButton = styled(motion(IconButton))(({ theme }) => ({
   },
 }));
 
-const AuthButton = styled(motion(Button))(({ theme }) => ({
+const AuthButton = styled(motion(Button))(({ theme, scrolled }) => ({
   borderRadius: '20px',
   textTransform: 'none',
   px: 3,
   py: 1,
   fontWeight: 600,
   fontSize: '0.9rem',
-  transition: 'all 0.3s ease',
+  color: scrolled ? theme.palette.primary.main : '#fff',
+  border: `1px solid ${scrolled ? theme.palette.divider : '#fff'}`,
   '&:hover': {
-    transform: 'translateY(-3px)',
-    boxShadow: theme.shadows[6],
+    backgroundColor: scrolled ? theme.palette.action.hover : 'rgba(255,255,255,0.1)',
+    boxShadow: theme.shadows[4],
   },
 }));
+
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  const isArabic = i18n.language === 'ar';
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -115,14 +118,13 @@ const Navbar = () => {
     { key: 'about', path: '/about' },
     { key: 'services', path: '/services' },
     { key: 'why', path: '/why' },
+    { key: 'dashboard', path: '/dashboard' },
   ];
 
   return (
     <StyledAppBar position="fixed" scrolled={scrolled ? 1 : 0} elevation={scrolled ? 8 : 0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-
-          {/* Logo with stronger animation */}
           <Box
             component={motion.div}
             initial={{ opacity: 0, x: -40, scale: 0.9 }}
@@ -141,7 +143,6 @@ const Navbar = () => {
             </RouterLink>
           </Box>
 
-          {/* Desktop Navigation */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
             {navItems.map((item, i) => (
               <NavButton
@@ -149,6 +150,7 @@ const Navbar = () => {
                 component={RouterLink}
                 to={item.path}
                 active={location.pathname === item.path ? 1 : 0}
+                scrolled={scrolled ? 1 : 0}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4, ease: 'easeOut' }}
@@ -159,7 +161,6 @@ const Navbar = () => {
             ))}
           </Box>
 
-          {/* Auth Buttons */}
           <Box
             sx={{
               display: { xs: 'none', md: 'flex' },
@@ -173,10 +174,12 @@ const Navbar = () => {
               to="/login"
               variant="outlined"
               startIcon={<Login />}
-              whileHover={{ y: -3, boxShadow: '0px 8px 15px rgba(0,0,0,0.2)' }}
+              scrolled={scrolled ? 1 : 0}
+              whileHover={{ y: -3 }}
             >
               {t('navbar.login')}
             </AuthButton>
+
             <AuthButton
               component={RouterLink}
               to="/register"
@@ -198,7 +201,6 @@ const Navbar = () => {
             </LanguageButton>
           </Box>
 
-          {/* Mobile Menu Button */}
           <IconButton
             size="large"
             aria-label="menu"
@@ -216,7 +218,6 @@ const Navbar = () => {
           </IconButton>
         </Toolbar>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -244,6 +245,7 @@ const Navbar = () => {
                     to={item.path}
                     active={location.pathname === item.path ? 1 : 0}
                     fullWidth
+                    scrolled={1}
                     sx={{ justifyContent: 'flex-start', px: 3, py: 1.5 }}
                     onClick={() => setMobileOpen(false)}
                     initial={{ opacity: 0, x: -20 }}
@@ -255,98 +257,14 @@ const Navbar = () => {
                     {t(`navbar.${item.key}`)}
                   </NavButton>
                 ))}
-
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    px: 2,
-                    pt: 1,
-                    borderTop: '1px solid',
-                    borderColor: 'divider',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <AuthButton
-                    component={RouterLink}
-                    to="/login"
-                    variant="outlined"
-                    startIcon={<Login />}
-                    sx={{ flex: '1 1 auto', minWidth: '120px' }}
-                    onClick={() => setMobileOpen(false)}
-                    whileHover={{ y: -3, boxShadow: '0px 8px 15px rgba(0,0,0,0.2)' }}
-                  >
-                    {t('navbar.login')}
-                  </AuthButton>
-                  <AuthButton
-                    component={RouterLink}
-                    to="/register"
-                    variant="contained"
-                    startIcon={<PersonAdd />}
-                    sx={{ flex: '1 1 auto', minWidth: '120px' }}
-                    onClick={() => setMobileOpen(false)}
-                    whileHover={{ y: -3, boxShadow: '0px 8px 20px rgba(25,118,210,0.5)' }}
-                  >
-                    {t('navbar.register')}
-                  </AuthButton>
-
-                  <LanguageButton
-                    aria-label="change language"
-                    onClick={handleMenuOpen}
-                    size="small"
-                    sx={{ ml: 0, mt: 1 }}
-                    whileHover={{ rotate: 25 }}
-                    whileTap={{ rotate: 0 }}
-                  >
-                    <Language />
-                  </LanguageButton>
-                </Box>
               </Box>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Language Menu */}
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleMenuClose}
-          TransitionComponent={Fade}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <MenuItem
-            onClick={() => changeLanguage('en')}
-            selected={!isArabic}
-            sx={{
-              '&.Mui-selected': {
-                backgroundColor: 'primary.light',
-              },
-              fontWeight: 'bold',
-            }}
-          >
-            English
-          </MenuItem>
-          <MenuItem
-            onClick={() => changeLanguage('ar')}
-            selected={isArabic}
-            sx={{
-              '&.Mui-selected': {
-                backgroundColor: 'primary.light',
-              },
-              fontWeight: 'bold',
-            }}
-          >
-            العربية
-          </MenuItem>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose} TransitionComponent={motion.div}>
+          <MenuItem onClick={() => changeLanguage('en')}>English</MenuItem>
+          <MenuItem onClick={() => changeLanguage('ar')}>العربية</MenuItem>
         </Menu>
       </Container>
     </StyledAppBar>
