@@ -6,7 +6,7 @@ import { useTheme, styled, keyframes } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import Lottie from 'lottie-react';
 import startupAnimation from '../../animation.json';
-
+import { useNavigate } from 'react-router-dom';
 // حركة ناعمة للدوائر الخلفية
 const moveAround = keyframes`
   0%, 100% { transform: translateY(0) translateX(0); }
@@ -39,7 +39,7 @@ const HeroSection = () => {
   const isArabic = i18n.language === 'ar';
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -106,7 +106,7 @@ const HeroSection = () => {
                 whileHover={{ scale: 1.1, boxShadow: '0 0 15px #fff' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <Button variant="outlined" size="large" color="inherit" sx={{ borderColor: '#fff', color: '#fff', fontWeight: 'bold' }}>
+                <Button variant="outlined" size="large" color="inherit" sx={{ borderColor: '#fff', color: '#fff', fontWeight: 'bold' }} onClick={() => navigate('/contact-us')}>
                   {t('hero.cta2')}
                 </Button>
               </motion.div>

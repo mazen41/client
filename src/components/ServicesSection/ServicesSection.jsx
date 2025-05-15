@@ -60,6 +60,7 @@ const ServicesSection = () => {
         py: 8,
         direction: isArabic ? 'rtl' : 'ltr',
       }}
+      id={'services-section'}
     >
       <Box textAlign="center" mb={6}>
         <Typography

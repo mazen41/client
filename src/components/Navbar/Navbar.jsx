@@ -30,9 +30,10 @@ const StyledAppBar = styled(AppBar)(({ theme, scrolled }) => ({
   borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
   padding: scrolled ? theme.spacing(1, 0) : theme.spacing(2, 0),
   zIndex: theme.zIndex.appBar + 1,
+  height: '80px' // Added fixed height for consistent offset
 }));
 
-const NavButton = styled(motion(Button))(({ theme, active, scrolled }) => ({
+const NavButton = styled(Button)(({ theme, active, scrolled }) => ({
   color: scrolled
     ? active
       ? theme.palette.primary.main
@@ -61,7 +62,7 @@ const NavButton = styled(motion(Button))(({ theme, active, scrolled }) => ({
   },
 }));
 
-const LanguageButton = styled(motion(IconButton))(({ theme }) => ({
+const LanguageButton = styled(IconButton)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   marginLeft: theme.spacing(1),
   transition: 'all 0.3s ease',
@@ -71,7 +72,7 @@ const LanguageButton = styled(motion(IconButton))(({ theme }) => ({
   },
 }));
 
-const AuthButton = styled(motion(Button))(({ theme, scrolled }) => ({
+const AuthButton = styled(Button)(({ theme, scrolled }) => ({
   borderRadius: '20px',
   textTransform: 'none',
   px: 3,
@@ -86,8 +87,7 @@ const AuthButton = styled(motion(Button))(({ theme, scrolled }) => ({
   },
 }));
 
-
-const Navbar = () => {
+const Navbar = ({ scrollToSection }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -113,18 +113,23 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleScrollClick = (sectionId) => {
+    setMobileOpen(false); // Close mobile menu when clicking a link
+    scrollToSection(sectionId);
+  };
+
   const navItems = [
     { key: 'home', path: '/' },
-    { key: 'about', path: '/about' },
-    { key: 'services', path: '/services' },
-    { key: 'why', path: '/why' },
+    { key: 'about', id: 'about-section' },
+    { key: 'services', id: 'services-section' },
+    { key: 'why', id: 'why-section' },
     { key: 'dashboard', path: '/dashboard' },
   ];
 
   return (
     <StyledAppBar position="fixed" scrolled={scrolled ? 1 : 0} elevation={scrolled ? 8 : 0}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ height: '80px' }}>
           <Box
             component={motion.div}
             initial={{ opacity: 0, x: -40, scale: 0.9 }}
@@ -134,7 +139,7 @@ const Navbar = () => {
           >
             <RouterLink to="/">
               <motion.img
-                src="./new-logo.png"
+                src="/new-logo.png"
                 alt="NadaPay Logo"
                 whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 0.6 }}
@@ -145,47 +150,65 @@ const Navbar = () => {
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
             {navItems.map((item, i) => (
-              <NavButton
-                key={item.key}
-                component={RouterLink}
-                to={item.path}
-                active={location.pathname === item.path ? 1 : 0}
-                scrolled={scrolled ? 1 : 0}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i, duration: 0.4, ease: 'easeOut' }}
-                whileHover={{ scale: 1.1 }}
-              >
-                {t(`navbar.${item.key}`)}
-              </NavButton>
+              item.path ? (
+                <NavButton
+                  key={item.key}
+                  // component={RouterLink}
+                  to={item.path}
+                  active={location.pathname === item.path ? 1 : 0}
+                  scrolled={scrolled ? 1 : 0}
+                  component={motion.div}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * i, duration: 0.4 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  {t(`navbar.${item.key}`)}
+                </NavButton>
+              ) : (
+                <NavButton
+                  key={item.key}
+                  onClick={() => handleScrollClick(item.id)}
+                  scrolled={scrolled ? 1 : 0}
+                  active={false}
+                  component={motion.div}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * i, duration: 0.4 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  {t(`navbar.${item.key}`)}
+                </NavButton>
+              )
             ))}
           </Box>
 
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              alignItems: 'center',
-              gap: 2,
-              ml: 3,
-            }}
-          >
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2, ml: 3 }}>
             <AuthButton
-              component={RouterLink}
+              // component={RouterLink}
               to="/login"
               variant="outlined"
               startIcon={<Login />}
               scrolled={scrolled ? 1 : 0}
-              whileHover={{ y: -3 }}
+              component={motion.div}
+              whileHover={{ y: -2 }}
             >
               {t('navbar.login')}
             </AuthButton>
 
             <AuthButton
-              component={RouterLink}
+              // component={RouterLink}
               to="/register"
               variant="contained"
               startIcon={<PersonAdd />}
-              whileHover={{ y: -3, boxShadow: '0px 8px 20px rgba(25,118,210,0.5)' }}
+              sx={{
+                background: 'linear-gradient(45deg, #1976D2, #00D1B2)',
+                '&:hover': {
+                  boxShadow: '0px 8px 20px rgba(25,118,210,0.5)'
+                }
+              }}
+              component={motion.div}
+              whileHover={{ y: -2 }}
             >
               {t('navbar.register')}
             </AuthButton>
@@ -194,6 +217,7 @@ const Navbar = () => {
               aria-label="change language"
               onClick={handleMenuOpen}
               size="small"
+              component={motion.div}
               whileHover={{ rotate: 25 }}
               whileTap={{ rotate: 0 }}
             >
@@ -241,13 +265,16 @@ const Navbar = () => {
                 {navItems.map((item) => (
                   <NavButton
                     key={item.key}
-                    component={RouterLink}
+                    // component={item.path ? RouterLink : Button}
                     to={item.path}
+                    onClick={() => {
+                      if (!item.path) handleScrollClick(item.id);
+                    }}
                     active={location.pathname === item.path ? 1 : 0}
                     fullWidth
                     scrolled={1}
                     sx={{ justifyContent: 'flex-start', px: 3, py: 1.5 }}
-                    onClick={() => setMobileOpen(false)}
+                    component={motion.div}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
@@ -262,7 +289,19 @@ const Navbar = () => {
           )}
         </AnimatePresence>
 
-        <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose} TransitionComponent={motion.div}>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleMenuClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
           <MenuItem onClick={() => changeLanguage('en')}>English</MenuItem>
           <MenuItem onClick={() => changeLanguage('ar')}>العربية</MenuItem>
         </Menu>

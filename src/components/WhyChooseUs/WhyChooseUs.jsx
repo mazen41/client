@@ -90,6 +90,7 @@ const WhyChooseUs = () => {
         background: 'linear-gradient(to bottom right, #f8f9fc, #e4eaf4)',
         direction: isArabic ? 'rtl' : 'ltr',
       }}
+      id={'why-section'}
     >
       <MotionTypography
         variant="h4"
